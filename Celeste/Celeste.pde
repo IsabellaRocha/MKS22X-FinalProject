@@ -13,3 +13,21 @@ class Tile {
         this.ypos = ypos;
     }
 }
+
+class Spike extends Tile {
+    Spike(float xpos, float ypos) {
+        super();
+    }
+}
+
+class Ground extends Tile {
+    Ground(float xpos, float ypos) {
+        super(xpos, ypos);
+    }
+}
+
+class Exit extends Tile {
+    Exit(float xpos, float ypos) {
+        super(xpos, ypos);
+    }
+}
