@@ -23,7 +23,3 @@ class Spike extends Tile {
 class Ground extends Tile {
 
 }
-
-class Exit extends Tile {
-    
-}
