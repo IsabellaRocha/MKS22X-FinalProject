@@ -21,13 +21,9 @@ class Spike extends Tile {
 }
 
 class Ground extends Tile {
-    Ground(float xpos, float ypos) {
-        super(xpos, ypos);
-    }
+
 }
 
 class Exit extends Tile {
-    Exit(float xpos, float ypos) {
-        super(xpos, ypos);
-    }
+    
 }
