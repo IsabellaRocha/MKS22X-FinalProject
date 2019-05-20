@@ -1,4 +1,4 @@
-class Tile {
+abstract class Tile {
     float tilewidth;
     float tileheight;
 
@@ -12,11 +12,15 @@ class Tile {
         this.xpos = xpos;
         this.ypos = ypos;
     }
+    abstract int interact();
 }
 
 class Spike extends Tile {
     Spike(float xpos, float ypos) {
-        super();
+        this.width = 16;
+        this.height = 20;
+        this.xpos = xpos;
+        this.ypos = ypos;
     }
 }
 
