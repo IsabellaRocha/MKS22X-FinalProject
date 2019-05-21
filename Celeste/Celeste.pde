@@ -33,7 +33,7 @@ class Ground extends Tile {
                 return 2;
             }
         }
-        if (ypos <= other.ypos && ypos + tileheight >= other.ypos + other.playerheight) {
+        if (ypos >= other.ypos && ypos - tileheight <= other.ypos - other.playerheight) {
             if (xpos == other.xpos + other.playerwidth) { //If player is approaching wall from right
                 return 3;
             }
