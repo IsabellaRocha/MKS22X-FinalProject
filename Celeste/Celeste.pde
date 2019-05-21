@@ -6,22 +6,17 @@ abstract class Tile {
     float ypos;
 
     Tile(float xpos, float ypos) {
-        tilewidth = 32;
-        tileheight = 32;
+        tilewidth = 4;
+        tileheight = 4;
 
         this.xpos = xpos;
         this.ypos = ypos;
     }
-    abstract int interact();
+
+    abstract int interact(Player other);
 }
 
 class Spike extends Tile {
-    Spike(float xpos, float ypos) {
-        this.tilewidth = 16;
-        this.tileheight = 20;
-        this.xpos = xpos;
-        this.ypos = ypos;
-    }
 
 }
 
