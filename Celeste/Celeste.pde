@@ -12,8 +12,8 @@ abstract class Tile {
         this.xpos = xpos;
         this.ypos = ypos;
     }
-    
-    abstract int interact();
+
+    abstract int interact(Player other);
 }
 
 class Spike extends Tile {
