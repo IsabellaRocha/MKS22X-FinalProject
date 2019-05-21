@@ -6,22 +6,18 @@ abstract class Tile {
     float ypos;
 
     Tile(float xpos, float ypos) {
-        tilewidth = 32;
-        tileheight = 32;
+        tilewidth = 4;
+        tileheight = 4;
 
         this.xpos = xpos;
         this.ypos = ypos;
     }
+    
     abstract int interact();
 }
 
 class Spike extends Tile {
-    Spike(float xpos, float ypos) {
-        this.width = 16;
-        this.height = 20;
-        this.xpos = xpos;
-        this.ypos = ypos;
-    }
+
 }
 
 class Ground extends Tile {
