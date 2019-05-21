@@ -25,12 +25,20 @@ class Ground extends Tile {
         super(xpos, ypos);
     }
     int interact(Player other) {
-        if (xpos <= other.xpos && xpos + tilewidth >= other.xpos + other.playerWidth) {
+        if (xpos <= other.xpos && xpos + tilewidth >= other.xpos + other.playerwidth) {
             if (ypos == other.ypos - other.playerheight) {
                 return 1;
             }
             if (ypos - tileheight == other.ypos) {
                 return 2;
+            }
+        }
+        if (ypos <= other.ypos && ypos + tileheight >= other.ypos + other.playerheight) {
+            if (xpos == other.xpos - other.playerwidth) {
+                return 3;
+            }
+            if (xpos - tilewidth == other.xpos) {
+                return 4;
             }
         }
     }
