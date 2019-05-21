@@ -25,7 +25,7 @@ class Ground extends Tile {
         super(xpos, ypos);
     }
     int interact(Player other) {
-        if (xpos <= other.xpos && xpos + tilewidth >= other.xpos + other.playerwidth) {
+        if (other.xpos >= xpos && other.xpos <= xpos + tilewidth) {
             if (ypos == other.ypos - other.playerheight) { // If player is standing on tile
                 return 1;
             }
