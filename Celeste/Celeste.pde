@@ -1,3 +1,4 @@
+import java.util.*
 class Map {
     Tile[][] map;
     Map(String str) {
@@ -11,5 +12,13 @@ class Map {
                 count++;
             }
         }
+    }
+    String convert() throws FileNotFoundException{
+        File f = new File("MapArchive.txt");
+        Scanner x = new Scanner(f);
+        return x.toString();
+    }
+    void draw() {
+        Map = new Map(convert());
     }
 }
