@@ -13,43 +13,53 @@ abstract class Tile {
         this.ypos = ypos;
     }
 
-    abstract int interact(Player other);
+    abstract String interact(Player p);
 }
 
-class Spike extends Tile {
+class AERIAL extends Tile {
 
-}
-
-class Ground extends Tile {
-    Ground(float xpos, float ypos) {
-        super(xpos, ypos);
+    String interact(Player p) {
+        return "0A";
     }
-    int interact(Player other) {
-        if (other.xpos >= xpos && other.xpos <= xpos + tilewidth) {
-            if (ypos == other.ypos - other.playerheight) { // If player is standing on tile
-                return 1;
+
+}
+
+class GROUND extends Tile {
+
+    String interact(Player p) {
+        if(p.xpos >= xpos && p.xpos < xpos + tilewidth) {
+            // UP
+            if (ypos == p.ypos - tileheight) {
+                return "1U";
             }
-            if (ypos - tileheight == other.ypos) { //If player is hitting tile from bottom
-                return 2;
+
+            // DOWN
+            if (ypos == p.ypos + p.playerheight) {
+                return "1D";
             }
         }
-        if (other.ypos <= ypos && other.ypos >= ypos - tileheight) {
-            if (xpos == other.xpos + other.playerwidth) { //If player is approaching wall from right
-                return 3;
+
+        if(p.ypos <= ypos && p.ypos >= ypos - tileheight) {
+            // LEFT
+            if (xpos + tilewidth == p.xpos) {
+                return "1L";
             }
-            if (xpos + tilewidth == other.xpos) { //If player is approaching wall from left
-                return 4;
+
+            // RIGHT
+            if (xpos == p.xpos + p.playerwidth) {
+                return "1R";
             }
         }
-        return 5; //When 5, nothing happens
+
+        return "0A";
     }
+
 }
 
-class Air extends Tile{
-    Air(float xpos, float ypos) {
-        super(xpos, ypos);
+class HAZARD extends Tile {
+
+    String interact(Player p) {
+        return "2H";
     }
-    int interact(Player other) {
-        return 5;
-    }
+
 }
