@@ -1,21 +1,35 @@
-import java.util.*
+import java.io.FileNotFoundException;
+
 class Map {
-    Tile[][] map;
-    Map(String str) {
-        map = new Tile[32][32];
-        int count = 0;
-        for (int idx = 0; idx < 32; idx++) {
-            for (int x = 0; x < 32; x++) {
-                if(str.charAt(count) == 'H') map[idx][x] = new HAZARD(idx * 16, x * 16);
-                if(str.charAt(count) == 'G') map[idx][x] = new GROUND(idx * 16, x * 16);
-                else map[idx][x] = new AERIAL(idx * 16, x * 16);
-                count++;
-            }
+    Tile[][] data;
+    String[] map_archive;
+    int room_ID;
+
+    Map() {
+        data = new Tile[32][32];
+
+        String[] maps = {
+            "LVL1.txt",
+            "LVL2.txt"
         }
+        map_archive = maps;
+
+        room_ID = 0;
+
+        maplayout();
     }
-    String convert() throws FileNotFoundException{
-        File f = new File("MapArchive.txt");
-        Scanner x = new Scanner(f);
-        return x.toString();
+
+    void maplayout() throws FileNotFoundException {
+        File f = new File(map_archive[room_ID]);
+        Scanner in = new Scanner(f);
+
+        for(int i=0; i<in.toString().length(); i++) {
+            int row = i / 16;
+            int col = i - 16 * (i / 16);
+
+            if(str.charAt(i) == 'H') map[row][col] = new HAZARD(row * 16, col * 16);
+            if(str.charAt(i) == 'G') map[row][col] = new GROUND(row * 16, col * 16);
+            else map[row][col] = new AERIAL(row * 16, col * 16);
+        }
     }
 }
