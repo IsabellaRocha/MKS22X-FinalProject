@@ -18,7 +18,4 @@ class Map {
         Scanner x = new Scanner(f);
         return x.toString();
     }
-    void draw() {
-        Map = new Map(convert());
-    }
 }
