@@ -103,7 +103,7 @@ class HAZARD extends Tile {
 }
 
 class Player {
-    
+
     PImage img;
 
     // player position
@@ -119,8 +119,15 @@ class Player {
     // gravitational constant
     float grav;
 
-    Player() {
-
+    Player(float xpos, float ypos) {
+        this.xpos = xpos;
+        this.ypos = ypos;
+        xvel = 0;
+        yvel = 0;
+        grav = 0.01;
+        playerwidth = 36;
+        playerheight = 28;
+        img = loadImage("izze.jpg");
     }
 
     void update() {
