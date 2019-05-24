@@ -110,8 +110,8 @@ class Player {
     float xpos, ypos;
 
     // player dimensions
-    float playerwidth;
-    float playerheight;
+    int playerwidth;
+    int playerheight;
 
     // float y velocity
     float xvel, yvel;
@@ -122,12 +122,16 @@ class Player {
     Player(float xpos, float ypos) {
         this.xpos = xpos;
         this.ypos = ypos;
-        xvel = 0;
-        yvel = 0;
-        grav = 0.01;
+
+        xvel = 0.00;
+        yvel = 0.00;
+
+        grav = 1.00;
+
         playerwidth = 36;
         playerheight = 28;
-        img = loadImage("izze.jpg");
+
+        img = loadImage("img/izze.png");
     }
 
     void update() {
