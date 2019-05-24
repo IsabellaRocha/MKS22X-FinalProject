@@ -6,8 +6,8 @@ abstract class Tile {
     float ypos;
 
     Tile(float xpos, float ypos) {
-        tilewidth = 4;
-        tileheight = 4;
+        tilewidth = 16;
+        tileheight = 16;
 
         this.xpos = xpos;
         this.ypos = ypos;
