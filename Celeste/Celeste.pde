@@ -135,6 +135,6 @@ class Player {
     }
 
     void display() {
-
+        image(img, xpos, ypos, playerwidth, playerheight);
     }
 }
