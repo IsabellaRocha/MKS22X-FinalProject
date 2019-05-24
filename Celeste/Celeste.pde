@@ -13,7 +13,7 @@ class Map {
         String[] maps = {
             "LVL1.txt",
             "LVL2.txt"
-        }
+        };
         map_archive = maps;
 
         room_ID = 0;
