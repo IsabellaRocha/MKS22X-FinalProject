@@ -103,15 +103,31 @@ class HAZARD extends Tile {
 }
 
 class Player {
+    
+    PImage img;
 
-    float xpos;
-    float ypos;
+    // player position
+    float xpos, ypos;
+
+    // player dimensions
     float playerwidth;
     float playerheight;
-    float xvel;
-    float yvel;
+
+    // float y velocity
+    float xvel, yvel;
+
+    // gravitational constant
     float grav;
+
     Player() {
-        
+
+    }
+
+    void update() {
+
+    }
+
+    void display() {
+
     }
 }
