@@ -101,3 +101,17 @@ class HAZARD extends Tile {
     }
 
 }
+
+class Player {
+
+    float xpos;
+    float ypos;
+    float playerwidth;
+    float playerheight;
+    float xvel;
+    float yvel;
+    float grav;
+    Player() {
+        
+    }
+}
