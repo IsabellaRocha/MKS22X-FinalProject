@@ -119,9 +119,15 @@ class Player {
     // gravitational constant
     float grav;
 
+    // original player position
+    float ogx, ogy;
+
     Player(float xpos, float ypos) {
         this.xpos = xpos;
         this.ypos = ypos;
+
+        ogx = xpos;
+        ogy = ypos;
 
         xvel = 0.00;
         yvel = 0.00;
@@ -145,27 +151,30 @@ class Player {
         xpos += xvel;
         ypos += yvel;
         int og = ypos;
-        if(keyPressed == true) {
-            if(keyCode == RIGHT && !getState().equals("1R")) {
+        boolean jumped = false;
+        if (ypos == og && !jumped) yvel = 0;
+        if(keyPressed) {
+            if(keyCode == RIGHT && !getState().equals("1R") && xpos != width) {
                 xvel = 2.0;
             }
-            if(keyCode == LEFT && !getState().equals("1L")) {
+            if(keyCode == LEFT && !getState().equals("1L") && xpos != 0) {
                 xvel = -2.0;
             }
-            else xvel = 0;
+            else if (keyCode != RIGHT && keyCode != LEFT) xvel = 0;
             if(getState().equals("1D")) {
+                jumped = false;
                 if(key == 'c') {
-                    yvel = -4;
                     og = ypos;
+                    jumped = true;
+                    yvel = -4;
                 }
-                else yvel = 0;
             }
-            if(getState().equals("0A")) {
-                yvel += grav;
-            }
-            if(getState().equals("1U")) {
-                yvel = 0;
-            }
+        }
+        if(getState().equals("0A")) {
+            yvel += grav;
+        }
+        if(getState().equals("1U")) {
+            yvel = 0;
         }
     }
 
