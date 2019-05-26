@@ -23,4 +23,4 @@ Izzy: Hardcoded the first level txt file. Fixed a minor issue in the interact me
 Tim: Merged the Tile and Map branches into master. Changed the tile dimensions such that spikes are now the correct size. Fixed the constructor in player and the formatting of the code.
 
 5/26/19:
-Izzy: Started writing the update and getState() method for the player to determine whether they can move left or right or jump. Finished hardcoding the second level.
+Izzy: Started writing the update and getState() method for the player to determine whether they can move left or right or jump. Finished hardcoding the second level. Made player respawn if it falls off map or hits a spike.
