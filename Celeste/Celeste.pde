@@ -135,7 +135,25 @@ class Player {
     }
 
     void update() {
+        for (Tile[] arr: play.data) {
+            for (Tile t: arr) {
+                if (t.interact(this).equals("1U")) {
 
+                }
+                if (t.interact(this).equals("1D")) {
+
+                }
+                if (t.interact(this).equals("1L")) {
+
+                }
+                if (t.interact(this).equals("1R")) {
+
+                }
+                if (t.interact(this).equals("2H")) {
+
+                }
+            }
+        }
     }
 
     void display() {
