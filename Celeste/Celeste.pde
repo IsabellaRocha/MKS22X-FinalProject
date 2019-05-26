@@ -176,6 +176,10 @@ class Player {
         if(getState().equals("1U")) {
             yvel = 0;
         }
+        if(getState().equals("2H") || ypos == height) {
+            xpos = ogx;
+            ypos = ogy;
+        }
     }
 
     void display() {
