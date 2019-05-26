@@ -67,7 +67,7 @@ class GROUND extends Tile {
     String interact(Player p) {
         if(p.xpos >= xpos && p.xpos < xpos + tilewidth) {
             // UP
-            if (ypos == p.ypos - tileheight) {
+            if (ypos + tileheight == p.ypos) {
                 return "1U";
             }
 
@@ -135,13 +135,32 @@ class Player {
     }
 
     void update() {
+        xpos += xvel;
+        ypos += yvel;
+        if(keyPressed == true) {
+            if(keyCode == RIGHT) {
+                xvel = 2.0;
+            }
+            if(keyCode == LEFT) {
+                xvel = -2.0;
+            }
+            else xvel = 0;
+            if (ypos == -2 * playerheight) {
+                yvel *= -1;
+            }
+        }
         for (Tile[] arr: play.data) {
             for (Tile t: arr) {
                 if (t.interact(this).equals("1U")) {
-
+                    yvel *= -1;
                 }
                 if (t.interact(this).equals("1D")) {
-
+                    if (keyPressed == true) {
+                        if(key == 'c') {
+                            yvel -= grav;
+                        }
+                    }
+                    else yvel = 0;
                 }
                 if (t.interact(this).equals("1L")) {
 
