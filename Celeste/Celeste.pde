@@ -134,43 +134,37 @@ class Player {
         img = loadImage("img/izze.png");
     }
 
+    String getState() {
+        for (Tile[] arr: play.data) {
+            for (Tile t: arr) {
+                return t.interact(this);
+            }
+        }
+    }
     void update() {
         xpos += xvel;
         ypos += yvel;
+        int og = ypos;
         if(keyPressed == true) {
-            if(keyCode == RIGHT) {
+            if(keyCode == RIGHT && !getState().equals("1R")) {
                 xvel = 2.0;
             }
-            if(keyCode == LEFT) {
+            if(keyCode == LEFT && !getState().equals("1L")) {
                 xvel = -2.0;
             }
             else xvel = 0;
-            if (ypos == -2 * playerheight) {
-                yvel *= -1;
+            if(getState().equals("1D")) {
+                if(key == 'c') {
+                    yvel = -4;
+                    og = ypos;
+                }
+                else yvel = 0;
             }
-        }
-        for (Tile[] arr: play.data) {
-            for (Tile t: arr) {
-                if (t.interact(this).equals("1U")) {
-                    yvel *= -1;
-                }
-                if (t.interact(this).equals("1D")) {
-                    if (keyPressed == true) {
-                        if(key == 'c') {
-                            yvel -= grav;
-                        }
-                    }
-                    else yvel = 0;
-                }
-                if (t.interact(this).equals("1L")) {
-
-                }
-                if (t.interact(this).equals("1R")) {
-
-                }
-                if (t.interact(this).equals("2H")) {
-
-                }
+            if(getState().equals("0A")) {
+                yvel += grav;
+            }
+            if(getState().equals("1U")) {
+                yvel = 0;
             }
         }
     }
