@@ -186,8 +186,6 @@ class Player {
             ypos = spawny;
         }
         */
-
-
     }
 
     void display() {
@@ -215,4 +213,13 @@ boolean setMove(int k, boolean active) {
     if(k == 68) return right = active;     // D
 
     return active;
+}
+
+void setup() {
+    size(512, 512);
+    frameRate(60);
+}
+
+void draw() {
+    
 }
