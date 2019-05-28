@@ -119,15 +119,18 @@ class Player {
     // gravitational constant
     float grav;
 
-    // original player position
-    float ogx, ogy;
+    // player spawn point
+    float spawnx, spawny;
+
+    // can jump, can air dash
+    boolean jump, dash;
 
     Player(float xpos, float ypos) {
         this.xpos = xpos;
         this.ypos = ypos;
 
-        ogx = xpos;
-        ogy = ypos;
+        spawnx = xpos;
+        spawny = ypos;
 
         xvel = 0.00;
         yvel = 0.00;
@@ -147,7 +150,9 @@ class Player {
             }
         }
     }
+
     void update() {
+        /*
         xpos += xvel;
         ypos += yvel;
         int og = ypos;
@@ -177,9 +182,12 @@ class Player {
             yvel = 0;
         }
         if(getState().equals("2H") || ypos == height) {
-            xpos = ogx;
-            ypos = ogy;
+            xpos = spawnx;
+            ypos = spawny;
         }
+        */
+
+
     }
 
     void display() {
