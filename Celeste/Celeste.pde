@@ -152,6 +152,12 @@ class Player {
     }
 
     void update() {
+        if(left) {
+            xpos -= 1;
+        }
+        if(right) {
+            xpos += 1;
+        }
         /*
         xpos += xvel;
         ypos += yvel;
