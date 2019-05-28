@@ -21,17 +21,22 @@ class Map {
         maplayout();
     }
 
-    void maplayout() throws FileNotFoundException {
-        File f = new File(map_archive[room_ID]);
-        Scanner in = new Scanner(f);
+    void maplayout() {
+        try {
+            File f = new File(map_archive[room_ID]);
+            Scanner in = new Scanner(f);
 
-        for(int i=0; i<in.toString().length(); i++) {
-            int row = i / 16;
-            int col = i - 16 * (i / 16);
+            String str = in.toString();
+            for(int i=0; i<str.length(); i++) {
+                int row = i / 16;
+                int col = i - 16 * (i / 16);
 
-            if(str.charAt(i) == 'H') map[row][col] = new HAZARD(row * 16, col * 16);
-            if(str.charAt(i) == 'G') map[row][col] = new GROUND(row * 16, col * 16);
-            else map[row][col] = new AERIAL(row * 16, col * 16);
+                if(str.charAt(i) == 'H') data[row][col] = new HAZARD(row * 16, col * 16);
+                if(str.charAt(i) == 'G') data[row][col] = new GROUND(row * 16, col * 16);
+                else data[row][col] = new AERIAL(row * 16, col * 16);
+            }
+        } catch(FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }
@@ -56,6 +61,10 @@ abstract class Tile {
 
 class AERIAL extends Tile {
 
+    AERIAL(float xpos, float ypos) {
+        super(xpos, ypos);
+    }
+
     String interact(Player p) {
         return "0A";
     }
@@ -63,6 +72,10 @@ class AERIAL extends Tile {
 }
 
 class GROUND extends Tile {
+
+    GROUND(float xpos, float ypos) {
+        super(xpos, ypos);
+    }
 
     String interact(Player p) {
         if(p.xpos >= xpos && p.xpos < xpos + tilewidth) {
@@ -96,6 +109,10 @@ class GROUND extends Tile {
 
 class HAZARD extends Tile {
 
+    HAZARD(float xpos, float ypos) {
+        super(xpos, ypos);
+    }
+
     String interact(Player p) {
         return "2H";
     }
@@ -122,9 +139,6 @@ class Player {
     // player spawn point
     float spawnx, spawny;
 
-    // can jump, can air dash
-    boolean jump, dash;
-
     Player(float xpos, float ypos) {
         this.xpos = xpos;
         this.ypos = ypos;
@@ -143,6 +157,7 @@ class Player {
         img = loadImage("img/izze.png");
     }
 
+    /*
     String getState() {
         for (Tile[] arr: play.data) {
             for (Tile t: arr) {
@@ -150,11 +165,13 @@ class Player {
             }
         }
     }
+    */
 
     void update() {
         if(left) {
             xpos -= 1;
         }
+
         if(right) {
             xpos += 1;
         }
@@ -199,6 +216,7 @@ class Player {
     }
 }
 
+boolean dash, jump;
 boolean up, down, left, right;
 
 void keyPressed() {
@@ -221,11 +239,21 @@ boolean setMove(int k, boolean active) {
     return active;
 }
 
+PImage bg;
+Player madeline;
+
 void setup() {
     size(512, 512);
     frameRate(60);
+
+    bg = loadImage("img/LEVEL_01.png");
+
+    Map mappy = new Map();
+    madeline = new Player(20, 20);
 }
 
 void draw() {
-    
+    image(bg, 0, 0);
+    madeline.display();
+    madeline.update();
 }
