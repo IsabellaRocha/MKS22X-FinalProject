@@ -114,7 +114,7 @@ class HAZARD extends Tile {
     }
 
     String interact(Player p) {
-        return "2H";
+        // oh no
     }
 
 }
