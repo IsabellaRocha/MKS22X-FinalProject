@@ -194,3 +194,25 @@ class Player {
         image(img, xpos, ypos, playerwidth, playerheight);
     }
 }
+
+boolean up, down, left, right;
+
+void keyPressed() {
+    setMove(keyCode, true);
+}
+
+void keyReleased() {
+    setMove(keyCode, false);
+}
+
+boolean setMove(int k, boolean active) {
+    if(k == 74) return dash  = active;     // J
+    if(k == 75) return jump  = active;     // K
+
+    if(k == 87) return up    = active;     // W
+    if(k == 83) return down  = active;     // S
+    if(k == 65) return left  = active;     // A
+    if(k == 68) return right = active;     // D
+
+    return active;
+}
