@@ -249,7 +249,7 @@ void setup() {
     bg = loadImage("img/LEVEL_01.png");
 
     Map mappy = new Map();
-    madeline = new Player(20, 20);
+    madeline = new Player(30, 388);
 }
 
 void draw() {
