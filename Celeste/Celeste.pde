@@ -114,7 +114,31 @@ class HAZARD extends Tile {
     }
 
     String interact(Player p) {
-        // oh no
+        if(p.xpos >= xpos && p.xpos < xpos + tilewidth) {
+            // PLAYER HITS BOTTOM OF SPIKE
+            if (ypos + tileheight == p.ypos) {
+                return "2H";
+            }
+
+            // PLAYER ON TOP OF SPIKE
+            if (ypos == p.ypos + p.playerheight) {
+                return "2H";
+            }
+        }
+
+        if(p.ypos <= ypos && p.ypos >= ypos - tileheight) {
+            // PLAYER HITS RIGHT SIDE OF SPIKE
+            if (xpos + tilewidth == p.xpos) {
+                return "2H";
+            }
+
+            // PLAYER HITS LEFT SIDE OF SPIKE
+            if (xpos == p.xpos + p.playerwidth) {
+                return "2H";
+            }
+        }
+
+        return "0A";
     }
 
 }
