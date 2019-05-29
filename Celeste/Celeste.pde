@@ -114,30 +114,23 @@ class HAZARD extends Tile {
     }
 
     String interact(Player p) {
-        if(p.xpos >= xpos && p.xpos < xpos + tilewidth) {
-            // PLAYER HITS BOTTOM OF SPIKE
-            if (ypos + tileheight == p.ypos) {
-                return "2H";
-            }
+        boolean n, s, w, e;
+        n = false;
+        s = false;
+        w = false;
+        e = false;
 
-            // PLAYER ON TOP OF SPIKE
-            if (ypos == p.ypos + p.playerheight) {
-                return "2H";
-            }
+        if(p.xpos >= xpos && p.xpos < xpos + tilewidth) {
+            n = ypos + tileheight == p.ypos;        // UP
+            s = ypos == p.ypos + p.playerheight;    // DOWN
         }
 
         if(p.ypos <= ypos && p.ypos >= ypos - tileheight) {
-            // PLAYER HITS RIGHT SIDE OF SPIKE
-            if (xpos + tilewidth == p.xpos) {
-                return "2H";
-            }
-
-            // PLAYER HITS LEFT SIDE OF SPIKE
-            if (xpos == p.xpos + p.playerwidth) {
-                return "2H";
-            }
+            w = xpos + tilewidth == p.xpos;         // LEFT
+            e = xpos == p.xpos + p.playerwidth;     // RIGHT
         }
 
+        if(n || s || w || e) return "2H";
         return "0A";
     }
 
@@ -182,22 +175,23 @@ class Player {
     }
 
 
-    String getState() {
-        for (Tile[] arr: mappy.data) {
-            for (Tile t: arr) {
-                return t.interact(this);
+    boolean getState(String in) {
+        for(Tile[] row : mappy.data) {
+            for(Tile t : row) {
+                if(in.equals(t.interact(this))) return true;
             }
         }
-        return "0A";
+
+        return false;
     }
 
 
     void update() {
-        if(left && !getState().equals("1L")) {
+        if(left && !getState("1L")) {
             xpos -= 1;
         }
 
-        if(right && !getState().equals("1R")) {
+        if(right && !getState("1R")) {
             xpos += 1;
         }
         /*
@@ -265,8 +259,9 @@ boolean setMove(int k, boolean active) {
 }
 
 PImage bg;
-Player madeline;
+
 Map mappy;
+Player madeline;
 
 void setup() {
     size(512, 512);
