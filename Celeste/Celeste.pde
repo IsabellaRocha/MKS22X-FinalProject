@@ -173,8 +173,7 @@ class Player {
 
         img = loadImage("img/izze.png");
     }
-
-
+    
     boolean getState(String in) {
         for(Tile[] row : mappy.data) {
             for(Tile t : row) {
@@ -184,7 +183,6 @@ class Player {
 
         return false;
     }
-
 
     void update() {
         if(left && !getState("1L")) {
