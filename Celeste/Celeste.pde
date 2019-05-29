@@ -57,6 +57,7 @@ abstract class Tile {
     }
 
     abstract String interact(Player p);
+
 }
 
 class AERIAL extends Tile {
@@ -68,7 +69,9 @@ class AERIAL extends Tile {
     String interact(Player p) {
         return "0A";
     }
-
+    String toStringDebug() {
+        println("A");
+    }
 }
 
 class GROUND extends Tile {
@@ -104,6 +107,9 @@ class GROUND extends Tile {
 
         return "0A";
     }
+    String toStringDebug() {
+        println("G");
+    }
 
 }
 
@@ -133,7 +139,9 @@ class HAZARD extends Tile {
         if(n || s || w || e) return "2H";
         return "0A";
     }
-
+    String toStringDebug() {
+        println("H");
+    }
 }
 
 class Player {
@@ -177,6 +185,9 @@ class Player {
     boolean getState(String in) {
         for(Tile[] row : mappy.data) {
             for(Tile t : row) {
+                println(this);
+                println(t);
+                println(in);
                 if(in.equals(t.interact(this))) return true;
             }
         }
