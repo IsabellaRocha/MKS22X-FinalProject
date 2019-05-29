@@ -181,22 +181,23 @@ class Player {
         img = loadImage("img/izze.png");
     }
 
-    /*
+
     String getState() {
-        for (Tile[] arr: play.data) {
+        for (Tile[] arr: mappy.data) {
             for (Tile t: arr) {
                 return t.interact(this);
             }
         }
+        return "0A";
     }
-    */
+
 
     void update() {
-        if(left) {
+        if(left && !getState().equals("1L")) {
             xpos -= 1;
         }
 
-        if(right) {
+        if(right && !getState().equals("1R")) {
             xpos += 1;
         }
         /*
@@ -265,6 +266,7 @@ boolean setMove(int k, boolean active) {
 
 PImage bg;
 Player madeline;
+Map mappy;
 
 void setup() {
     size(512, 512);
@@ -272,7 +274,7 @@ void setup() {
 
     bg = loadImage("img/LEVEL_01.png");
 
-    Map mappy = new Map();
+    mappy = new Map();
     madeline = new Player(30, 388);
 }
 
