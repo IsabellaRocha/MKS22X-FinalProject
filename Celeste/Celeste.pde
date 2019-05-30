@@ -22,21 +22,14 @@ class Map {
     }
 
     void maplayout() {
-        try {
-            File f = new File(map_archive[room_ID]);
-            Scanner in = new Scanner(f);
+        String[] f = loadStrings("LVL1.txt");
 
-            String str = in.toString();
-            for(int i=0; i<str.length(); i++) {
-                int row = i / 16;
-                int col = i - 16 * (i / 16);
-
-                if(str.charAt(i) == 'H') data[row][col] = new HAZARD(row * 16, col * 16);
-                if(str.charAt(i) == 'G') data[row][col] = new GROUND(row * 16, col * 16);
-                else data[row][col] = new AERIAL(row * 16, col * 16);
+        for(int i=0; i<f.length; i++) {
+            for(int j=0; j<f[i].length(); j++) {
+                if(f[i].charAt(j) == 'G') data[i][j] = new GROUND(i, j);
+                else if(f[i].charAt(j) == 'H') data[i][j] = new HAZARD(i, j);
+                else data[i][j] = new AERIAL(i, j);
             }
-        } catch(FileNotFoundException e) {
-            e.printStackTrace();
         }
     }
 
@@ -45,6 +38,7 @@ class Map {
             for(Tile t : row) {
                 t.toStringDebug();
             }
+            println("");
         }
     }
 }
@@ -79,7 +73,7 @@ class AERIAL extends Tile {
     }
 
     void toStringDebug() {
-        println("A");
+        print("A");
     }
 }
 
@@ -118,7 +112,7 @@ class GROUND extends Tile {
     }
 
     void toStringDebug() {
-        println("G");
+        print("G");
     }
 }
 
@@ -150,7 +144,7 @@ class HAZARD extends Tile {
     }
 
     void toStringDebug() {
-        println("H");
+        print("H");
     }
 }
 
