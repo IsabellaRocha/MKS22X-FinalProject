@@ -39,6 +39,14 @@ class Map {
             e.printStackTrace();
         }
     }
+
+    void toStringDebug() {
+        for(Tile[] row : mappy.data) {
+            for(Tile t : row) {
+                t.toStringDebug();
+            }
+        }
+    }
 }
 
 abstract class Tile {
@@ -57,7 +65,7 @@ abstract class Tile {
     }
 
     abstract String interact(Player p);
-
+    abstract void toStringDebug();
 }
 
 class AERIAL extends Tile {
@@ -69,7 +77,8 @@ class AERIAL extends Tile {
     String interact(Player p) {
         return "0A";
     }
-    String toStringDebug() {
+
+    void toStringDebug() {
         println("A");
     }
 }
@@ -107,10 +116,10 @@ class GROUND extends Tile {
 
         return "0A";
     }
-    String toStringDebug() {
+
+    void toStringDebug() {
         println("G");
     }
-
 }
 
 class HAZARD extends Tile {
@@ -139,7 +148,8 @@ class HAZARD extends Tile {
         if(n || s || w || e) return "2H";
         return "0A";
     }
-    String toStringDebug() {
+
+    void toStringDebug() {
         println("H");
     }
 }
@@ -181,7 +191,7 @@ class Player {
 
         img = loadImage("img/izze.png");
     }
-    
+
     boolean getState(String in) {
         for(Tile[] row : mappy.data) {
             for(Tile t : row) {
@@ -279,6 +289,7 @@ void setup() {
     bg = loadImage("img/LEVEL_01.png");
 
     mappy = new Map();
+    mappy.toStringDebug();
     madeline = new Player(30, 388);
 }
 
