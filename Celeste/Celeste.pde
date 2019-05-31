@@ -32,15 +32,6 @@ class Map {
             }
         }
     }
-
-    void toStringDebug() {
-        for(Tile[] row : mappy.data) {
-            for(Tile t : row) {
-                t.toStringDebug();
-            }
-            println("");
-        }
-    }
 }
 
 abstract class Tile {
@@ -59,7 +50,6 @@ abstract class Tile {
     }
 
     abstract String interact(Player p);
-    abstract void toStringDebug();
 }
 
 class AERIAL extends Tile {
@@ -71,10 +61,6 @@ class AERIAL extends Tile {
     String interact(Player p) {
         return "0A";
     }
-
-    void toStringDebug() {
-        print("A");
-    }
 }
 
 class GROUND extends Tile {
@@ -84,35 +70,32 @@ class GROUND extends Tile {
     }
 
     String interact(Player p) {
+        println("interact");
         if(p.xpos >= xpos && p.xpos < xpos + tilewidth) {
             // UP
-            if (ypos + tileheight == p.ypos) {
+            if(ypos + tileheight == p.ypos) {
                 return "1U";
             }
 
             // DOWN
-            if (ypos == p.ypos + p.playerheight) {
+            if(ypos == p.ypos + p.playerheight) {
                 return "1D";
             }
         }
 
-        if(p.ypos <= ypos && p.ypos >= ypos - tileheight) {
+        if(p.ypos >= ypos && p.ypos <= ypos + tileheight || p.ypos + p.playerheight >= ypos && p.ypos + p.playerheight <= ypos + tileheight) {
             // LEFT
-            if (xpos + tilewidth == p.xpos) {
+            if(xpos + tilewidth == p.xpos) {
                 return "1L";
             }
 
             // RIGHT
-            if (xpos == p.xpos + p.playerwidth) {
+            if(xpos == p.xpos + p.playerwidth) {
                 return "1R";
             }
         }
 
         return "0A";
-    }
-
-    void toStringDebug() {
-        print("G");
     }
 }
 
@@ -141,10 +124,6 @@ class HAZARD extends Tile {
 
         if(n || s || w || e) return "2H";
         return "0A";
-    }
-
-    void toStringDebug() {
-        print("H");
     }
 }
 
@@ -189,10 +168,7 @@ class Player {
     boolean getState(String in) {
         for(Tile[] row : mappy.data) {
             for(Tile t : row) {
-                println(this);
-                println(t);
-                println(in);
-                if(in.equals(t.interact(this))) return true;
+                if(in.equals(t.interact(madeline))) return true;
             }
         }
 
@@ -201,11 +177,11 @@ class Player {
 
     void update() {
         if(left && !getState("1L")) {
-            xpos -= 1;
+            xpos -= 2;
         }
 
         if(right && !getState("1R")) {
-            xpos += 1;
+            xpos += 2;
         }
         /*
         xpos += xvel;
@@ -283,7 +259,6 @@ void setup() {
     bg = loadImage("img/LEVEL_01.png");
 
     mappy = new Map();
-    mappy.toStringDebug();
     madeline = new Player(30, 388);
 }
 
