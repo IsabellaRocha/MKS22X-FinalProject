@@ -184,6 +184,9 @@ class Player {
             xpos += 2;
         }
         /*
+        if(getState("0A") && !getState("1D")) {
+        ypos += 10;
+    }
         xpos += xvel;
         ypos += yvel;
         int og = ypos;
