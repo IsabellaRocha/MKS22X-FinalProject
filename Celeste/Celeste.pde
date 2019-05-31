@@ -75,21 +75,24 @@ class GROUND extends Tile {
     }
 
     String interact(Player p) {
-        println("interact");
-        if(p.ypos >= ypos && p.ypos <= ypos + tileheight || p.ypos + p.playerheight >= ypos && p.ypos + p.playerheight <= ypos + tileheight) {
+        if(p.ypos > ypos && p.ypos < ypos + tileheight || p.ypos + p.playerheight > ypos && p.ypos + p.playerheight < ypos + tileheight) {
             // LEFT
-            println("hi");
-            if(xpos + tilewidth == p.xpos) {
+            if(p.xpos == xpos + tilewidth) {
+                println("LEFT");
+                fill(0, 255, 0);
+                ellipse(xpos, ypos, 5, 5);
                 return "1L";
             }
 
             // RIGHT
-            if(xpos == p.xpos + 30) {
+            if(xpos == p.xpos + p.playerwidth) {
+                println("RIGHT");
+                fill(0, 255, 0);
+                ellipse(xpos, ypos, 5, 5);
                 return "1R";
             }
         }
         if(p.xpos >= xpos && p.xpos < xpos + tilewidth) {
-          println("check");
             // UP
             if(ypos + tileheight == p.ypos) {
                 return "1U";
@@ -295,4 +298,7 @@ void draw() {
     test();
     madeline.display();
     madeline.update();
+    fill(0, 0, 255);
+    ellipse(madeline.xpos, madeline.ypos, 5, 5);
+    ellipse(madeline.xpos + madeline.playerwidth, madeline.ypos, 5, 5);
 }
