@@ -26,9 +26,9 @@ class Map {
 
         for(int i=0; i<f.length; i++) {
             for(int j=0; j<f[i].length(); j++) {
-                if(f[i].charAt(j) == 'G') data[i][j] = new GROUND(i, j);
-                else if(f[i].charAt(j) == 'H') data[i][j] = new HAZARD(i, j);
-                else data[i][j] = new AERIAL(i, j);
+                if(f[i].charAt(j) == 'G') data[i][j] = new GROUND(j*16, i*16);
+                else if(f[i].charAt(j) == 'H') data[i][j] = new HAZARD(j*16, i*16);
+                else data[i][j] = new AERIAL(j*16, i*16);
             }
         }
     }
@@ -50,6 +50,7 @@ abstract class Tile {
     }
 
     abstract String interact(Player p);
+    abstract int getType();
 }
 
 class AERIAL extends Tile {
@@ -61,6 +62,10 @@ class AERIAL extends Tile {
     String interact(Player p) {
         return "0A";
     }
+
+    int getType() {
+        return 0;
+    }
 }
 
 class GROUND extends Tile {
@@ -71,7 +76,20 @@ class GROUND extends Tile {
 
     String interact(Player p) {
         println("interact");
+        if(p.ypos >= ypos && p.ypos <= ypos + tileheight || p.ypos + p.playerheight >= ypos && p.ypos + p.playerheight <= ypos + tileheight) {
+            // LEFT
+            println("hi");
+            if(xpos + tilewidth == p.xpos) {
+                return "1L";
+            }
+
+            // RIGHT
+            if(xpos == p.xpos + 30) {
+                return "1R";
+            }
+        }
         if(p.xpos >= xpos && p.xpos < xpos + tilewidth) {
+          println("check");
             // UP
             if(ypos + tileheight == p.ypos) {
                 return "1U";
@@ -83,19 +101,11 @@ class GROUND extends Tile {
             }
         }
 
-        if(p.ypos >= ypos && p.ypos <= ypos + tileheight || p.ypos + p.playerheight >= ypos && p.ypos + p.playerheight <= ypos + tileheight) {
-            // LEFT
-            if(xpos + tilewidth == p.xpos) {
-                return "1L";
-            }
-
-            // RIGHT
-            if(xpos == p.xpos + p.playerwidth) {
-                return "1R";
-            }
-        }
-
         return "0A";
+    }
+
+    int getType() {
+        return 1;
     }
 }
 
@@ -124,6 +134,10 @@ class HAZARD extends Tile {
 
         if(n || s || w || e) return "2H";
         return "0A";
+    }
+
+    int getType() {
+        return 2;
     }
 }
 
@@ -250,6 +264,17 @@ boolean setMove(int k, boolean active) {
     return active;
 }
 
+void test() {
+    for(Tile[] arr : mappy.data) {
+        for(Tile t : arr) {
+            if(t.getType() == 0) fill(255, 255, 255);
+            if(t.getType() == 1) fill(0, 0, 0);
+            if(t.getType() == 2) fill(255, 0, 0);
+            rect(t.xpos, t.ypos, 16, 16);
+        }
+    }
+}
+
 PImage bg;
 
 Map mappy;
@@ -266,7 +291,8 @@ void setup() {
 }
 
 void draw() {
-    image(bg, 0, 0);
+    // image(bg, 0, 0);
+    test();
     madeline.display();
     madeline.update();
 }
