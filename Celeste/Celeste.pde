@@ -22,7 +22,7 @@ class Map {
     }
 
     void maplayout() {
-        String[] f = loadStrings("LVL1.txt");
+        String[] f = loadStrings(map_archive[room_ID]);
 
         for(int i=0; i<f.length; i++) {
             for(int j=0; j<f[i].length(); j++) {
@@ -203,11 +203,16 @@ class Player {
         if(getState("1U")) {
             yvel = 0;
         }
-        if(getState("2H") || ypos == height;) {
+        if(getState("2H") || ypos == height) {
             xpos = spawnx;
             ypos = spawny;
         }
-
+        if(xpos == spawnx + 4) {
+          mappy.room_ID++;
+          mappy.maplayout();
+          xpos = spawnx;
+          ypos = spawny;
+        }
         /*
         if(getState("0A") && !getState("1D")) {
             ypos += 10;
