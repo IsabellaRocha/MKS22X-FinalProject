@@ -83,12 +83,12 @@ class GROUND extends Tile {
         }
         if(p.xpos >= xpos && p.xpos < xpos + tilewidth) {
             // UP
-            if(ypos + tileheight == p.ypos) {
+            if(ypos + tileheight + .601 >= p.ypos && ypos + tileheight - .601 <= p.ypos) {
                 return "1U";
             }
 
             // DOWN
-            if(ypos == p.ypos + p.playerheight) {
+            if(ypos + .601 <= p.ypos + p.playerheight && ypos - .601 >= p.ypos + p.playerheight) {
                 return "1D";
             }
         }
@@ -174,11 +174,11 @@ class Player {
     }
 
     void update() {
-        if(left && !getState("1L") && xpos != 0) {
+        if(left && !getState("1L") && xpos > 0) {
             xpos -= 2.1;
         }
 
-        if(right && !getState("1R") && xpos != width) {
+        if(right && !getState("1R") && xpos < width) {
             xpos += 2.1;
         }
 
