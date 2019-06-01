@@ -127,7 +127,7 @@ class HAZARD extends Tile {
 
 class Player {
 
-    PImage img;
+    // PImage img;
 
     // player position
     float xpos, ypos;
@@ -157,10 +157,13 @@ class Player {
 
         grav = 1.00;
 
-        playerwidth = 36;
+        // playerwidth = 36;
+        // playerheight = 28;
+
+        playerwidth = 30;
         playerheight = 28;
 
-        img = loadImage("img/izze.png");
+        // img = loadImage("img/izze.png");
     }
 
     boolean getState(String in) {
@@ -175,11 +178,11 @@ class Player {
 
     void update() {
         if(left && !getState("1L") && xpos != 0) {
-            xpos -= 2;
+            xpos -= 3;
         }
 
         if(right && !getState("1R") && xpos != width) {
-            xpos += 2;
+            xpos += 3;
         }
 
         /*
@@ -196,7 +199,12 @@ class Player {
     }
 
     void display() {
-        image(img, xpos, ypos, playerwidth, playerheight);
+        // image(img, xpos, ypos, playerwidth, playerheight);
+
+        noStroke();
+
+        fill(215, 20, 20);
+        rect(xpos, ypos, playerwidth, playerheight);
     }
 }
 
