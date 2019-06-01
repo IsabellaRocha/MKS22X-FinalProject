@@ -193,17 +193,26 @@ class Player {
     }
 
     void update() {
-        if(left && !getState("1L")) {
+        if(left && !getState("1L") && xpos != 0) {
             xpos -= 2;
         }
 
-        if(right && !getState("1R")) {
+        if(right && !getState("1R") && xpos != width) {
             xpos += 2;
+        }
+        if(getState().equals("1U")) {
+            yvel = 0;
         }
         /*
         if(getState("0A") && !getState("1D")) {
-        ypos += 10;
-    }
+            ypos += 10;
+        }
+        if(jump && getState("1D")) {
+            ypos -= 100;
+        }
+
+        /*
+
         xpos += xvel;
         ypos += yvel;
         int og = ypos;
