@@ -200,9 +200,14 @@ class Player {
         if(right && !getState("1R") && xpos != width) {
             xpos += 2;
         }
-        if(getState().equals("1U")) {
+        if(getState("1U")) {
             yvel = 0;
         }
+        if(getState("2H") || ypos == height;) {
+            xpos = spawnx;
+            ypos = spawny;
+        }
+
         /*
         if(getState("0A") && !getState("1D")) {
             ypos += 10;
@@ -218,14 +223,6 @@ class Player {
         int og = ypos;
         boolean jumped = false;
         if (ypos == og && !jumped) yvel = 0;
-        if(keyPressed) {
-            if(keyCode == RIGHT && !getState().equals("1R") && xpos != width) {
-                xvel = 2.0;
-            }
-            if(keyCode == LEFT && !getState().equals("1L") && xpos != 0) {
-                xvel = -2.0;
-            }
-            else if (keyCode != RIGHT && keyCode != LEFT) xvel = 0;
             if(getState().equals("1D")) {
                 jumped = false;
                 if(key == 'c') {
@@ -237,13 +234,6 @@ class Player {
         }
         if(getState().equals("0A")) {
             yvel += grav;
-        }
-        if(getState().equals("1U")) {
-            yvel = 0;
-        }
-        if(getState().equals("2H") || ypos == height) {
-            xpos = spawnx;
-            ypos = spawny;
         }
         */
     }
