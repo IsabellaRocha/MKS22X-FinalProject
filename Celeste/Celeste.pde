@@ -207,7 +207,7 @@ class Player {
             xpos = spawnx;
             ypos = spawny;
         }
-        if(xpos == spawnx + 4) {
+        if(ypos == 0) {
           mappy.room_ID++;
           mappy.maplayout();
           xpos = spawnx;
