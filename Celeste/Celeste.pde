@@ -183,6 +183,7 @@ class Player {
 
         if(right && !getState("1R") && xpos != width) {
             xpos += 3;
+        }
 
         if(left && !getState("1L") && xpos > 0) {
             xpos -= 2.1;
