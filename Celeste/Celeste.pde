@@ -50,7 +50,6 @@ abstract class Tile {
     }
 
     abstract String interact(Player p);
-    abstract int getType();
 }
 
 class AERIAL extends Tile {
@@ -61,10 +60,6 @@ class AERIAL extends Tile {
 
     String interact(Player p) {
         return "0A";
-    }
-
-    int getType() {
-        return 0;
     }
 }
 
@@ -100,10 +95,6 @@ class GROUND extends Tile {
 
         return "0A";
     }
-
-    int getType() {
-        return 1;
-    }
 }
 
 class HAZARD extends Tile {
@@ -131,10 +122,6 @@ class HAZARD extends Tile {
 
         if(n || s || w || e) return "2H";
         return "0A";
-    }
-
-    int getType() {
-        return 2;
     }
 }
 
@@ -194,47 +181,18 @@ class Player {
         if(right && !getState("1R") && xpos != width) {
             xpos += 2;
         }
+
+        /*
         if(getState("1U")) {
             yvel = 0;
         }
+
         if(getState("2H") || ypos == height) {
             xpos = spawnx;
             ypos = spawny;
         }
-        if(ypos == 0) {
-          mappy.room_ID++;
-          mappy.maplayout();
-          xpos = spawnx;
-          ypos = spawny;
-        }
-        /*
-        if(getState("0A") && !getState("1D")) {
-            ypos += 10;
-        }
-        if(jump && getState("1D")) {
-            ypos -= 100;
-        }
-
-        /*
-
-        xpos += xvel;
-        ypos += yvel;
-        int og = ypos;
-        boolean jumped = false;
-        if (ypos == og && !jumped) yvel = 0;
-            if(getState().equals("1D")) {
-                jumped = false;
-                if(key == 'c') {
-                    og = ypos;
-                    jumped = true;
-                    yvel = -4;
-                }
-            }
-        }
-        if(getState().equals("0A")) {
-            yvel += grav;
-        }
         */
+
     }
 
     void display() {
@@ -282,6 +240,7 @@ void setup() {
 
 void draw() {
     image(bg, 0, 0);
+
     madeline.display();
     madeline.update();
 }
