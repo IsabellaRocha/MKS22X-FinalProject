@@ -78,17 +78,11 @@ class GROUND extends Tile {
         if(p.ypos > ypos && p.ypos < ypos + tileheight || p.ypos + p.playerheight > ypos && p.ypos + p.playerheight < ypos + tileheight) {
             // LEFT
             if(p.xpos == xpos + tilewidth) {
-                println("LEFT");
-                fill(0, 255, 0);
-                ellipse(xpos, ypos, 5, 5);
                 return "1L";
             }
 
             // RIGHT
             if(xpos == p.xpos + p.playerwidth) {
-                println("RIGHT");
-                fill(0, 255, 0);
-                ellipse(xpos, ypos, 5, 5);
                 return "1R";
             }
         }
@@ -271,17 +265,6 @@ boolean setMove(int k, boolean active) {
     return active;
 }
 
-void test() {
-    for(Tile[] arr : mappy.data) {
-        for(Tile t : arr) {
-            if(t.getType() == 0) fill(255, 255, 255);
-            if(t.getType() == 1) fill(0, 0, 0);
-            if(t.getType() == 2) fill(255, 0, 0);
-            rect(t.xpos, t.ypos, 16, 16);
-        }
-    }
-}
-
 PImage bg;
 
 Map mappy;
@@ -298,11 +281,7 @@ void setup() {
 }
 
 void draw() {
-    // image(bg, 0, 0);
-    test();
+    image(bg, 0, 0);
     madeline.display();
     madeline.update();
-    fill(0, 0, 255);
-    ellipse(madeline.xpos, madeline.ypos, 5, 5);
-    ellipse(madeline.xpos + madeline.playerwidth, madeline.ypos, 5, 5);
 }
