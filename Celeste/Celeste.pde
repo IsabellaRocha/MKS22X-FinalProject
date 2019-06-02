@@ -88,7 +88,7 @@ class GROUND extends Tile {
             }
 
             // DOWN
-            if(ypos + .601 <= p.ypos + p.playerheight && ypos - .601 >= p.ypos + p.playerheight) {
+            if(ypos + .601 >= p.ypos + p.playerheight && ypos - .601 <= p.ypos + p.playerheight) {
                 return "1D";
             }
         }
@@ -155,7 +155,7 @@ class Player {
         xvel = 0.00;
         yvel = 0.00;
 
-        grav = 1.00;
+        grav = 0.00;
 
         // playerwidth = 36;
         // playerheight = 28;
@@ -191,27 +191,34 @@ class Player {
             ypos = spawny;
 
         }
-
-        /*
         if(getState("1U")) {
-            yvel = 0;
+            grav = 0;
         }
-
+        if(getState("1D") && !jump) {
+            grav = 0;
+        }
+        if(jump && getState("1D")) {
+            grav = 9;
+            ypos -= 10;
+        }
+        if(!getState("1D") && getState("0A")) {
+            ypos -= grav;
+            grav -= .5;
+        }
         if(getState("2H") || ypos > height) {
             xpos = spawnx;
             ypos = spawny;
         }
-        */
 
     }
 
     void display() {
-        // image(img, xpos, ypos, playerwidth, playerheight);
+         image(img, xpos, ypos, playerwidth, playerheight);
 
-        noStroke();
+    //    noStroke();
 
-        fill(215, 20, 20);
-        rect(xpos, ypos, playerwidth, playerheight);
+    //    fill(215, 20, 20);
+//        rect(xpos, ypos, playerwidth, playerheight);
     }
 }
 
@@ -240,6 +247,7 @@ boolean setMove(int k, boolean active) {
 
 PImage bg;
 PImage bg2;
+PImage img;
 
 Map mappy;
 Player madeline;
@@ -247,6 +255,7 @@ Player madeline;
 void setup() {
     size(512, 512);
     frameRate(60);
+    img = loadImage("img/izze.png");
 
     bg = loadImage("img/LEVEL_01.png");
     bg2 = loadImage("img/LEVEL_02.png");
