@@ -127,7 +127,7 @@ class HAZARD extends Tile {
 
 class Player {
 
-    PImage img;
+    // PImage img;
 
     // player position
     float xpos, ypos;
@@ -145,25 +145,24 @@ class Player {
     // player spawn point
     float spawnx, spawny;
 
-    Player(float xpos, float ypos) {
-        this.xpos = xpos;
-        this.ypos = ypos;
+    Player() {
+        spawnx = 25;
+        spawny = 388;
 
-        spawnx = xpos;
-        spawny = ypos;
+        respawn();
 
         xvel = 0.00;
         yvel = 0.00;
 
         grav = 0.00;
 
-         playerwidth = 36;
-         playerheight = 28;
+        // playerwidth = 36;
+        // playerheight = 28;
 
         playerwidth = 30;
         playerheight = 28;
 
-         img = loadImage("img/izze.png");
+        // img = loadImage("img/izze.png");
     }
 
     boolean getState(String in) {
@@ -176,6 +175,11 @@ class Player {
         return false;
     }
 
+    void respawn() {
+        xpos = spawnx;
+        ypos = spawny;
+    }
+
     void update() {
         if(left && !getState("1L") && xpos > 0) {
             xpos -= 3;
@@ -186,12 +190,16 @@ class Player {
         }
 
         //Switching levels
-        if(ypos < 0) {
-            mappy.room_ID = 1;
+        if(ypos <= 0) {
+            mappy.room_ID += 1;
             mappy.maplayout();
-            xpos = spawnx;
-            ypos = spawny;
 
+            if(mappy.room_ID == 1) {
+                spawnx = 25;
+                spawny = 388;
+            }
+
+            respawn();
         }
 
         //Stop when you hit bottom of a tile
@@ -217,7 +225,8 @@ class Player {
             }
         }
 
-        //Falling when against the wall
+        /*
+        // falling when against the wall
         if(!getState("1D") && getState("1R") || !getState("1D") && getState("1L")) {
             ypos -= grav;
             grav = -1.5;
@@ -227,16 +236,17 @@ class Player {
             xpos = spawnx;
             ypos = spawny;
         }
+        */
 
     }
 
     void display() {
-         image(img, xpos, ypos, playerwidth, playerheight);
+        // image(img, xpos, ypos, playerwidth, playerheight);
 
-    //    noStroke();
+        noStroke();
 
-    //    fill(215, 20, 20);
-//        rect(xpos, ypos, playerwidth, playerheight);
+        fill(215, 20, 20);
+        rect(xpos, ypos, playerwidth, playerheight);
     }
 }
 
@@ -263,8 +273,8 @@ boolean setMove(int k, boolean active) {
     return active;
 }
 
-PImage bg;
-PImage bg2;
+PImage LVL1;
+PImage LVL2;
 
 Map mappy;
 Player madeline;
@@ -273,16 +283,16 @@ void setup() {
     size(512, 512);
     frameRate(60);
 
-    bg = loadImage("img/LEVEL_01.png");
-    bg2 = loadImage("img/LEVEL_02.png");
+    LVL1 = loadImage("img/LEVEL_01.png");
+    LVL2 = loadImage("img/LEVEL_02.png");
 
     mappy = new Map();
-    madeline = new Player(25, 388);
+    madeline = new Player();
 }
 
 void draw() {
-    if(mappy.room_ID == 0) image(bg, 0, 0);
-    if(mappy.room_ID == 1) image(bg2, 0, 0);
+    if(mappy.room_ID == 0) image(LVL1, 0, 0);
+    if(mappy.room_ID == 1) image(LVL2, 0, 0);
 
     madeline.display();
     madeline.update();
