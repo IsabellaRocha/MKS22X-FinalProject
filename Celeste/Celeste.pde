@@ -88,7 +88,7 @@ class GROUND extends Tile {
             }
 
             // DOWN
-            if(ypos + .601 >= p.ypos + p.playerheight && ypos - .601 <= p.ypos + p.playerheight) {
+            if(ypos + 5 >= p.ypos + p.playerheight && ypos - 5 <= p.ypos + p.playerheight) {
                 return "1D";
             }
         }
@@ -112,7 +112,7 @@ class HAZARD extends Tile {
 
         if(p.xpos >= xpos && p.xpos < xpos + tilewidth) {
             n = ypos + tileheight + .601 >= p.ypos && ypos + tileheight - .601 <= p.ypos;        // UP
-            s = ypos + .601 <= p.ypos + p.playerheight && ypos - .601 >= p.ypos + p.playerheight;    // DOWN
+            s = ypos + 5 >= p.ypos + p.playerheight && ypos - 5 <= p.ypos + p.playerheight;    // DOWN
         }
 
         if(p.ypos > ypos && p.ypos < ypos + tileheight || p.ypos + p.playerheight > ypos && p.ypos + p.playerheight < ypos + tileheight) {
@@ -127,7 +127,7 @@ class HAZARD extends Tile {
 
 class Player {
 
-    // PImage img;
+    PImage img;
 
     // player position
     float xpos, ypos;
@@ -157,13 +157,13 @@ class Player {
 
         grav = 0.00;
 
-        // playerwidth = 36;
-        // playerheight = 28;
+         playerwidth = 36;
+         playerheight = 28;
 
         playerwidth = 30;
         playerheight = 28;
 
-        // img = loadImage("img/izze.png");
+         img = loadImage("img/izze.png");
     }
 
     boolean getState(String in) {
@@ -193,15 +193,16 @@ class Player {
         }
         if(getState("1U")) {
             grav = 0;
+            ypos += 1;
         }
         if(getState("1D") && !jump) {
             grav = 0;
         }
         if(jump && getState("1D")) {
             grav = 9;
-            ypos -= 10;
+            ypos -= 1;
         }
-        if(!getState("1D") && getState("0A")) {
+        if(!getState("1D")) {
             ypos -= grav;
             grav -= .5;
         }
@@ -247,7 +248,6 @@ boolean setMove(int k, boolean active) {
 
 PImage bg;
 PImage bg2;
-PImage img;
 
 Map mappy;
 Player madeline;
@@ -255,7 +255,6 @@ Player madeline;
 void setup() {
     size(512, 512);
     frameRate(60);
-    img = loadImage("img/izze.png");
 
     bg = loadImage("img/LEVEL_01.png");
     bg2 = loadImage("img/LEVEL_02.png");
