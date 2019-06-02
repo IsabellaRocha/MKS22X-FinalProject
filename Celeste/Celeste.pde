@@ -72,12 +72,12 @@ class GROUND extends Tile {
     String interact(Player p) {
         if(p.ypos > ypos && p.ypos < ypos + tileheight || p.ypos + p.playerheight > ypos + .25 && p.ypos + p.playerheight < ypos + tileheight - .25) {
             // LEFT
-            if(p.xpos >= xpos + tilewidth - 1 && p.xpos <= xpos + tilewidth + 1) {
+            if(p.xpos >= xpos + tilewidth && p.xpos <= xpos + tilewidth) {
                 return "1L";
             }
 
             // RIGHT
-            if(xpos - 1 <= p.xpos + p.playerwidth && xpos + 1 >= p.xpos + p.playerwidth) {
+            if(xpos <= p.xpos + p.playerwidth && xpos >= p.xpos + p.playerwidth) {
                 return "1R";
             }
         }
@@ -111,13 +111,13 @@ class HAZARD extends Tile {
         e = false;
 
         if(p.xpos >= xpos && p.xpos < xpos + tilewidth) {
-            n = ypos + tileheight + 2.85 >= p.ypos && ypos + tileheight - 2.85 <= p.ypos;        // UP
-            s = ypos + 2.85 >= p.ypos + p.playerheight && ypos - 2.85 <= p.ypos + p.playerheight;    // DOWN
+            n = ypos + tileheight >= p.ypos && ypos + tileheight <= p.ypos;        // UP
+            s = ypos >= p.ypos + p.playerheight && ypos <= p.ypos + p.playerheight;    // DOWN
         }
 
         if(p.ypos > ypos && p.ypos < ypos + tileheight || p.ypos + p.playerheight > ypos && p.ypos + p.playerheight < ypos + tileheight) {
-            w = (p.xpos >= xpos + tilewidth - 1 && p.xpos <= xpos + tilewidth + 1);         // LEFT
-            e = (xpos - 1 <= p.xpos + p.playerwidth && xpos + 1 >= p.xpos + p.playerwidth);     // RIGHT
+            w = (p.xpos >= xpos + tilewidth && p.xpos <= xpos + tilewidth);         // LEFT
+            e = (xpos <= p.xpos + p.playerwidth && xpos >= p.xpos + p.playerwidth);     // RIGHT
         }
 
         if(n || s || w || e) return "2H";
@@ -146,7 +146,7 @@ class Player {
     float spawnx, spawny;
 
     Player() {
-        spawnx = 25;
+        spawnx = 24;
         spawny = 388;
 
         respawn();
@@ -195,17 +195,17 @@ class Player {
             mappy.maplayout();
 
             if(mappy.room_ID == 1) {
-                spawnx = 25;
+                spawnx = 24;
                 spawny = 388;
             }
 
             respawn();
         }
 
+        /*
         //Stop when you hit bottom of a tile
         if(getState("1U")) {
             grav = 0;
-            ypos += 1;
         }
 
         //Don't fall through the floor
@@ -224,6 +224,7 @@ class Player {
                 grav -= .25;
             }
         }
+        */
 
         /*
         // falling when against the wall
