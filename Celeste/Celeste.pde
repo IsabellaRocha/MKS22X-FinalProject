@@ -184,6 +184,8 @@ class Player {
         if(right && !getState("1R") && xpos < width) {
             xpos += 3;
         }
+
+        //Switching levels
         if(ypos < 0) {
             mappy.room_ID = 1;
             mappy.maplayout();
@@ -191,10 +193,14 @@ class Player {
             ypos = spawny;
 
         }
+
+        //Stop when you hit bottom of a tile
         if(getState("1U")) {
             grav = 0;
             ypos += 1;
         }
+
+        //Don't fall through the floor
         if(getState("1D") && !jump) {
             grav = 0;
         }
@@ -202,12 +208,21 @@ class Player {
             grav = 6;
             ypos -= 5;
         }
-        if(!getState("1D")) {
+
+        //Falling in air
+        if(!getState("1D") && !getState("1R") && !getState("1L")) {
             ypos -= grav;
             if (grav > -4) {
                 grav -= .25;
             }
         }
+
+        //Falling when against the wall
+        if(!getState("1D") && getState("1R") || !getState("1D") && getState("1L")) {
+            ypos -= grav;
+            grav = -1.5;
+        }
+
         if(getState("2H") || ypos > height) {
             xpos = spawnx;
             ypos = spawny;
