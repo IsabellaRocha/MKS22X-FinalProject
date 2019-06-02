@@ -81,7 +81,7 @@ class GROUND extends Tile {
                 return "1R";
             }
         }
-        if(p.xpos >= xpos && p.xpos < xpos + tilewidth) {
+        if(p.xpos > xpos && p.xpos < xpos + tilewidth || p.xpos + p.playerwidth > xpos && p.xpos + p.playerwidth < xpos + tilewidth) {
             // UP
             if(ypos + tileheight + .601 >= p.ypos && ypos + tileheight - .601 <= p.ypos) {
                 return "1U";
@@ -199,12 +199,12 @@ class Player {
             grav = 0;
         }
         if(jump && getState("1D")) {
-            grav = 9;
-            ypos -= 1;
+            grav = 6;
+            ypos -= 5;
         }
         if(!getState("1D")) {
             ypos -= grav;
-            grav -= .5;
+            grav -= .25;
         }
         if(getState("2H") || ypos > height) {
             xpos = spawnx;
