@@ -184,6 +184,13 @@ class Player {
         if(right && !getState("1R") && xpos < width) {
             xpos += 3;
         }
+        if(ypos < 0) {
+            mappy.room_ID = 1;
+            mappy.maplayout();
+            xpos = spawnx;
+            ypos = spawny;
+
+        }
 
         /*
         if(getState("1U")) {
@@ -232,6 +239,7 @@ boolean setMove(int k, boolean active) {
 }
 
 PImage bg;
+PImage bg2;
 
 Map mappy;
 Player madeline;
@@ -241,13 +249,15 @@ void setup() {
     frameRate(60);
 
     bg = loadImage("img/LEVEL_01.png");
+    bg2 = loadImage("img/LEVEL_02.png");
 
     mappy = new Map();
     madeline = new Player(30, 388);
 }
 
 void draw() {
-    image(bg, 0, 0);
+    if(mappy.room_ID == 0) image(bg, 0, 0);
+    if(mappy.room_ID == 1) image(bg2, 0, 0);
 
     madeline.display();
     madeline.update();
