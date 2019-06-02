@@ -111,13 +111,13 @@ class HAZARD extends Tile {
         e = false;
 
         if(p.xpos >= xpos && p.xpos < xpos + tilewidth) {
-            n = ypos + tileheight == p.ypos;        // UP
-            s = ypos == p.ypos + p.playerheight;    // DOWN
+            n = ypos + tileheight + .601 >= p.ypos && ypos + tileheight - .601 <= p.ypos;        // UP
+            s = ypos + .601 <= p.ypos + p.playerheight && ypos - .601 >= p.ypos + p.playerheight;    // DOWN
         }
 
-        if(p.ypos <= ypos && p.ypos >= ypos - tileheight) {
-            w = xpos + tilewidth == p.xpos;         // LEFT
-            e = xpos == p.xpos + p.playerwidth;     // RIGHT
+        if(p.ypos > ypos && p.ypos < ypos + tileheight || p.ypos + p.playerheight > ypos && p.ypos + p.playerheight < ypos + tileheight) {
+            w = (p.xpos >= xpos + tilewidth - .601 && p.xpos <= xpos + tilewidth + .601);         // LEFT
+            e = (xpos - .601 <= p.xpos + p.playerwidth && xpos + .601 >= p.xpos + p.playerwidth);     // RIGHT
         }
 
         if(n || s || w || e) return "2H";
@@ -177,20 +177,12 @@ class Player {
     }
 
     void update() {
-        if(left && !getState("1L") && xpos != 0) {
+        if(left && !getState("1L") && xpos > 0) {
             xpos -= 3;
         }
 
-        if(right && !getState("1R") && xpos != width) {
-            xpos += 3;
-        }
-
-        if(left && !getState("1L") && xpos > 0) {
-            xpos -= 2.1;
-        }
-
         if(right && !getState("1R") && xpos < width) {
-            xpos += 2.1;
+            xpos += 3;
         }
 
         /*
@@ -198,7 +190,7 @@ class Player {
             yvel = 0;
         }
 
-        if(getState("2H") || ypos == height) {
+        if(getState("2H") || ypos > height) {
             xpos = spawnx;
             ypos = spawny;
         }
