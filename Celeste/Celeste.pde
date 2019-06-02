@@ -70,25 +70,25 @@ class GROUND extends Tile {
     }
 
     String interact(Player p) {
-        if(p.ypos > ypos && p.ypos < ypos + tileheight || p.ypos + p.playerheight > ypos && p.ypos + p.playerheight < ypos + tileheight) {
+        if(p.ypos > ypos && p.ypos < ypos + tileheight || p.ypos + p.playerheight > ypos + .25 && p.ypos + p.playerheight < ypos + tileheight - .25) {
             // LEFT
-            if(p.xpos >= xpos + tilewidth - .601 && p.xpos <= xpos + tilewidth + .601) {
+            if(p.xpos >= xpos + tilewidth - 1 && p.xpos <= xpos + tilewidth + 1) {
                 return "1L";
             }
 
             // RIGHT
-            if(xpos - .601 <= p.xpos + p.playerwidth && xpos + .601 >= p.xpos + p.playerwidth) {
+            if(xpos - 1 <= p.xpos + p.playerwidth && xpos + 1 >= p.xpos + p.playerwidth) {
                 return "1R";
             }
         }
-        if(p.xpos > xpos && p.xpos < xpos + tilewidth || p.xpos + p.playerwidth > xpos && p.xpos + p.playerwidth < xpos + tilewidth) {
+        if(p.xpos > xpos - .2 && p.xpos < xpos + tilewidth + .2 || p.xpos + p.playerwidth > xpos && p.xpos + p.playerwidth < xpos + tilewidth) {
             // UP
-            if(ypos + tileheight + .601 >= p.ypos && ypos + tileheight - .601 <= p.ypos) {
+            if(ypos + tileheight + 2.85 >= p.ypos && ypos + tileheight - 2.85 <= p.ypos) {
                 return "1U";
             }
 
             // DOWN
-            if(ypos + 5 >= p.ypos + p.playerheight && ypos - 5 <= p.ypos + p.playerheight) {
+            if(ypos + 2.85 >= p.ypos + p.playerheight && ypos - 2.85 <= p.ypos + p.playerheight) {
                 return "1D";
             }
         }
@@ -111,13 +111,13 @@ class HAZARD extends Tile {
         e = false;
 
         if(p.xpos >= xpos && p.xpos < xpos + tilewidth) {
-            n = ypos + tileheight + .601 >= p.ypos && ypos + tileheight - .601 <= p.ypos;        // UP
-            s = ypos + 5 >= p.ypos + p.playerheight && ypos - 5 <= p.ypos + p.playerheight;    // DOWN
+            n = ypos + tileheight + 2.85 >= p.ypos && ypos + tileheight - 2.85 <= p.ypos;        // UP
+            s = ypos + 2.85 >= p.ypos + p.playerheight && ypos - 2.85 <= p.ypos + p.playerheight;    // DOWN
         }
 
         if(p.ypos > ypos && p.ypos < ypos + tileheight || p.ypos + p.playerheight > ypos && p.ypos + p.playerheight < ypos + tileheight) {
-            w = (p.xpos >= xpos + tilewidth - .601 && p.xpos <= xpos + tilewidth + .601);         // LEFT
-            e = (xpos - .601 <= p.xpos + p.playerwidth && xpos + .601 >= p.xpos + p.playerwidth);     // RIGHT
+            w = (p.xpos >= xpos + tilewidth - 1 && p.xpos <= xpos + tilewidth + 1);         // LEFT
+            e = (xpos - 1 <= p.xpos + p.playerwidth && xpos + 1 >= p.xpos + p.playerwidth);     // RIGHT
         }
 
         if(n || s || w || e) return "2H";
@@ -204,7 +204,9 @@ class Player {
         }
         if(!getState("1D")) {
             ypos -= grav;
-            grav -= .25;
+            if (grav > -4) {
+                grav -= .25;
+            }
         }
         if(getState("2H") || ypos > height) {
             xpos = spawnx;
@@ -260,7 +262,7 @@ void setup() {
     bg2 = loadImage("img/LEVEL_02.png");
 
     mappy = new Map();
-    madeline = new Player(30, 388);
+    madeline = new Player(25, 388);
 }
 
 void draw() {
