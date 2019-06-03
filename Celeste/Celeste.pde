@@ -179,8 +179,12 @@ class Player {
 
     void update() {
         xpos += xvel;
-        if (xvel < 0) xvel += .25;
-        if (xvel > 0) xvel -= .25;
+        ypos += yvel;
+        if(xvel < 0) xvel += .25;
+        if(xvel > 0) xvel -= .25;
+        if(yvel < 0) yvel += .25;
+        if(yvel > 0) yvel -= .25;
+
         if(left && !getState("1L") && xpos > 0 && xvel == 0) {
             xpos -= 3;
         }
@@ -248,6 +252,29 @@ class Player {
             xvel = 5;
             grav = 5;
             ypos -= 4;
+        }
+
+        if(dash && right && up) {
+            xvel = 5;
+            yvel = -5;
+        }
+        else if(dash && right && down) {
+            xvel = 5;
+            yvel = 5;
+        }
+        else if(dash && right) {
+            xvel = 5;
+        }
+        if(dash && left && up) {
+            xvel = -5;
+            yvel = -5;
+        }
+        else if(dash && left && down) {
+            xvel = -5;
+            yvel = 5;
+        }
+        else if(dash && left) {
+            xvel = -5;
         }
 
         if(getState("2H") || ypos > height) {
