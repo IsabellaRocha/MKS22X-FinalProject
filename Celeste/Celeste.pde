@@ -81,7 +81,7 @@ class GROUND extends Tile {
                 return "1R";
             }
         }
-        if(p.xpos > xpos && p.xpos < xpos + tilewidth || p.xpos + p.playerwidth > xpos && p.xpos + p.playerwidth < xpos + tilewidth) {
+        if(p.xpos > xpos && p.xpos < xpos + tilewidth || p.xpos + p.playerwidth > xpos + 1.3 && p.xpos + p.playerwidth < xpos + tilewidth) {
             // UP
             if(ypos + tileheight + 2.85 >= p.ypos && ypos + tileheight - 2.85 <= p.ypos) {
                 return "1U";
