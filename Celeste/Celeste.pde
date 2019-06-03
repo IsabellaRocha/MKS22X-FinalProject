@@ -248,7 +248,8 @@ class Player {
         if(getState("1D") && !jump) {
             grav = 0;
             yvel = 0;
-            ypos = ypos - ypos % 16;
+            if(ypos % 1 > .5) ypos = (int) (ypos + 1);
+            else ypos = (int)ypos;
             dashed = false;
             start = 0;
         }
