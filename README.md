@@ -53,4 +53,10 @@ Tim: Added test cases to see which interactions were triggering, if cases weren'
 
 
 6/1/19:
-Izzy: Added the range so that you could update position by a float and the position of the player would not need to be exactly equal to the location of the tile. Also added the ranges to the edge of the map so that you can't run through that
+Izzy: Added the range so that you could update position by a float and the position of the player would not need to be exactly equal to the location of the tile. Also added the ranges to the edge of the map so that you can't run through that.
+
+
+6/2/19:
+Izzy: Added jumping and messed around with gravity constant. Fixed switching between levels and mostly fixed bugs that occur while jumping. Made it so you die as soon as you hit a tile and that your jump is stopped when you hit a tile above you.
+
+Tim: Cleaned up code to make it work a little more smoothly, thought of ways to fix the last jump bugs. Also drew the map for level 2.
