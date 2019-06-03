@@ -264,6 +264,8 @@ class Player {
                 grav -= .25;
             }
         }
+
+        //Gravity doesn't interfere while dash is still in effect
         if(!getState("1D") && !getState("1R") && !getState("1L") && dashed) {
             if(start == 0) start = frameCount;
             end = frameCount;
@@ -363,6 +365,7 @@ class Player {
             dashed = true;
         }
         if(dash && !right && down && !up && !left && !dashed && !getState("1D")) {
+            print("check");
             if(start == 0) start = frameCount;
             end = frameCount;
             if(end - start < 75) {
