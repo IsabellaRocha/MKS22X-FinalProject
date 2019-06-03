@@ -50,7 +50,6 @@ abstract class Tile {
     }
 
     abstract String interact(Player p);
-    abstract int getType();
 }
 
 class AERIAL extends Tile {
@@ -61,10 +60,6 @@ class AERIAL extends Tile {
 
     String interact(Player p) {
         return "0A";
-    }
-
-    int getType() {
-        return 0;
     }
 }
 
@@ -77,32 +72,28 @@ class GROUND extends Tile {
     String interact(Player p) {
         if(p.ypos > ypos && p.ypos < ypos + tileheight || p.ypos + p.playerheight > ypos && p.ypos + p.playerheight < ypos + tileheight) {
             // LEFT
-            if(p.xpos == xpos + tilewidth) {
+            if(p.xpos >= xpos + tilewidth - 1 && p.xpos <= xpos + tilewidth + 1) {
                 return "1L";
             }
 
             // RIGHT
-            if(xpos == p.xpos + p.playerwidth) {
+            if(xpos - 1 <= p.xpos + p.playerwidth && xpos + 1 >= p.xpos + p.playerwidth) {
                 return "1R";
             }
         }
-        if(p.xpos >= xpos && p.xpos < xpos + tilewidth) {
+        if(p.xpos > xpos && p.xpos < xpos + tilewidth - 1 || p.xpos + p.playerwidth > xpos + 1 && p.xpos + p.playerwidth < xpos + tilewidth) {
             // UP
-            if(ypos + tileheight == p.ypos) {
+            if(ypos + tileheight + 2.85 >= p.ypos && ypos + tileheight - 2.85 <= p.ypos) {
                 return "1U";
             }
 
             // DOWN
-            if(ypos == p.ypos + p.playerheight) {
+            if(ypos + 2.85 >= p.ypos + p.playerheight && ypos - 2.85 <= p.ypos + p.playerheight) {
                 return "1D";
             }
         }
 
         return "0A";
-    }
-
-    int getType() {
-        return 1;
     }
 }
 
@@ -120,21 +111,17 @@ class HAZARD extends Tile {
         e = false;
 
         if(p.xpos >= xpos && p.xpos < xpos + tilewidth) {
-            n = ypos + tileheight == p.ypos;        // UP
-            s = ypos == p.ypos + p.playerheight;    // DOWN
+            n = ypos + tileheight + 2.85 >= p.ypos && ypos + tileheight - 2.85 <= p.ypos;        // UP
+            s = ypos + 2.85 >= p.ypos + p.playerheight && ypos - 2.85 <= p.ypos + p.playerheight;    // DOWN
         }
 
-        if(p.ypos <= ypos && p.ypos >= ypos - tileheight) {
-            w = xpos + tilewidth == p.xpos;         // LEFT
-            e = xpos == p.xpos + p.playerwidth;     // RIGHT
+        if(p.ypos > ypos && p.ypos < ypos + tileheight || p.ypos + p.playerheight > ypos && p.ypos + p.playerheight < ypos + tileheight) {
+            w = (p.xpos >= xpos + tilewidth - 2 && p.xpos <= xpos + tilewidth + 2);         // LEFT
+            e = (xpos - 2 <= p.xpos + p.playerwidth && xpos + 2 >= p.xpos + p.playerwidth);     // RIGHT
         }
 
         if(n || s || w || e) return "2H";
         return "0A";
-    }
-
-    int getType() {
-        return 2;
     }
 }
 
@@ -158,6 +145,8 @@ class Player {
     // player spawn point
     float spawnx, spawny;
 
+    boolean dashed;
+
     Player(float xpos, float ypos) {
         this.xpos = xpos;
         this.ypos = ypos;
@@ -168,10 +157,12 @@ class Player {
         xvel = 0.00;
         yvel = 0.00;
 
-        grav = 1.00;
+        grav = 0.00;
 
-        playerwidth = 36;
+        playerwidth = 30;
         playerheight = 28;
+
+        dashed = false;
 
         img = loadImage("img/izze.png");
     }
@@ -185,60 +176,193 @@ class Player {
 
         return false;
     }
+    void respawn() {
+        xpos = spawnx;
+        ypos = spawny;
+    }
+
+    int start = 0;
+    int end = 0;
 
     void update() {
-        if(left && !getState("1L") && xpos != 0) {
-            xpos -= 2;
-        }
-
-        if(right && !getState("1R") && xpos != width) {
-            xpos += 2;
-        }
-        if(getState("1U")) {
-            yvel = 0;
-        }
-        if(getState("2H") || ypos == height) {
-            xpos = spawnx;
-            ypos = spawny;
-        }
-        if(ypos == 0) {
-          mappy.room_ID++;
-          mappy.maplayout();
-          xpos = spawnx;
-          ypos = spawny;
-        }
-        /*
-        if(getState("0A") && !getState("1D")) {
-            ypos += 10;
-        }
-        if(jump && getState("1D")) {
-            ypos -= 100;
-        }
-
-        /*
-
         xpos += xvel;
         ypos += yvel;
-        int og = ypos;
-        boolean jumped = false;
-        if (ypos == og && !jumped) yvel = 0;
-            if(getState().equals("1D")) {
-                jumped = false;
-                if(key == 'c') {
-                    og = ypos;
-                    jumped = true;
-                    yvel = -4;
-                }
+        if(xvel < 0) xvel += .25;
+        if(xvel > 0) xvel -= .25;
+        if(yvel < 0) yvel += .25;
+        if(yvel > 0) yvel -= .25;
+
+        if(left && !getState("1L") && xpos > 0 && xvel == 0) {
+            xpos -= 3;
+        }
+
+        if(right && !getState("1R") && xpos < width && xvel == 0) {
+            xpos += 3;
+        }
+        if(xvel != 0 && getState("1R") || xvel != 0 && getState("1L")) {
+            xvel = 0;
+        }
+
+        //Switching levels
+        if(ypos <= 0) {
+            mappy.room_ID += 1;
+            mappy.maplayout();
+
+            if(mappy.room_ID == 1) {
+                spawnx = 24;
+                spawny = 388;
+            }
+            respawn();
+        }
+
+        //Stop when you hit bottom of a tile
+        if(getState("1U")) {
+            grav = 0;
+            yvel = 0;
+            ypos += 1;
+        }
+
+        //Don't fall through the floor
+        if(getState("1D") && !jump) {
+            grav = 0;
+            yvel = 0;
+            ypos = ypos - ypos % 16;
+            dashed = false;
+            start = 0;
+        }
+        if(jump && getState("1D")) {
+            grav = 6;
+            ypos -= 5;
+        }
+
+        //Falling in air
+        if(!getState("1D") && !getState("1R") && !getState("1L") && !dashed) {
+            ypos -= grav;
+            if (grav > -5) {
+                grav -= .25;
             }
         }
-        if(getState().equals("0A")) {
-            yvel += grav;
+        if(!getState("1D") && !getState("1R") && !getState("1L") && dashed) {
+            if(start == 0) start = frameCount;
+            end = frameCount;
+            if(end - start > 25) {
+                ypos -= grav;
+                if (grav > -5) {
+                    grav -= .25;
+                }
+            }
+
         }
-        */
+
+        //Falling when against the wall
+        if(!getState("1D") && getState("1R") && !jump || !getState("1D") && getState("1L") && !jump) {
+            ypos -= grav;
+            if(grav > -1.5) {
+                grav -= .25;
+            }
+        }
+
+        //Wall jumping off right wall
+        if(!getState("1D") && getState("1R") && jump) {
+            xvel = -6;
+            grav = 5;
+            ypos -= 4;
+        }
+
+        //Wall jumping off left wall
+        if(!getState("1D") && getState("1L") && jump) {
+            xvel = 6;
+            grav = 5;
+            ypos -= 4;
+        }
+
+        if(dash && right && up && !down && !left && !dashed) {
+            if(start == 0) start = frameCount;
+            end = frameCount;
+            if(end - start < 75) {
+                end = frameCount;
+                xvel = 7;
+                yvel = -7;
+            }
+            dashed = true;
+        }
+        if(dash && right && down && !up && !left && !dashed) {
+            if(start == 0) start = frameCount;
+            end = frameCount;
+            if(end - start < 75) {
+                xvel = 7;
+                yvel = 7;
+            }
+            dashed = true;
+        }
+        if(dash && right && !down && !up && !left && !dashed) {
+            if(start == 0) start = frameCount;
+            end = frameCount;
+            if(end - start < 75) {
+                xvel = 7;
+                yvel = 0;
+            }
+            dashed = true;
+        }
+        if(dash && !right && !down && up && left && !dashed) {
+            if(start == 0) start = frameCount;
+            end = frameCount;
+            if(end - start < 75) {
+                xvel = -7;
+                yvel = -7;
+            }
+            dashed = true;
+        }
+        if(dash && !right && down && !up && left && !dashed) {
+            if(start == 0) start = frameCount;
+            end = frameCount;
+            if(end - start < 75) {
+                xvel = -7;
+                yvel = 7;
+            }
+            dashed = true;
+        }
+        if(dash && !right && !down && !up && left && !dashed) {
+            if(start == 0) start = frameCount;
+            end = frameCount;
+            if(end - start < 75) {
+                xvel = -7;
+                yvel = 0;
+            }
+            dashed = true;
+        }
+        if(dash && !right && !down && up && !left && !dashed) {
+            if(start == 0) start = frameCount;
+            end = frameCount;
+            if(end - start < 75) {
+                xvel = 0;
+                yvel = -7;
+            }
+            dashed = true;
+        }
+        if(dash && !right && down && !up && !left && !dashed) {
+            if(start == 0) start = frameCount;
+            end = frameCount;
+            if(end - start < 75) {
+                xvel = 0;
+                yvel = 7;
+            }
+            dashed = true;
+        }
+
+        if(getState("2H") || ypos > height) {
+            respawn();
+        }
+
     }
 
     void display() {
-        image(img, xpos, ypos, playerwidth, playerheight);
+         image(img, xpos, ypos, playerwidth, playerheight);
+
+    //    noStroke();
+
+    //    fill(215, 20, 20);
+//        rect(xpos, ypos, playerwidth, playerheight);
     }
 }
 
@@ -265,7 +389,8 @@ boolean setMove(int k, boolean active) {
     return active;
 }
 
-PImage bg;
+PImage LVL1;
+PImage LVL2;
 
 Map mappy;
 Player madeline;
@@ -274,14 +399,17 @@ void setup() {
     size(512, 512);
     frameRate(60);
 
-    bg = loadImage("img/LEVEL_01.png");
+    LVL1 = loadImage("img/LEVEL_01.png");
+    LVL2 = loadImage("img/LEVEL_02.png");
 
     mappy = new Map();
-    madeline = new Player(30, 388);
+    madeline = new Player(24, 388);
 }
 
 void draw() {
-    image(bg, 0, 0);
+    if(mappy.room_ID == 0) image(LVL1, 0, 0);
+    if(mappy.room_ID == 1) image(LVL2, 0, 0);
+
     madeline.display();
     madeline.update();
 }
