@@ -223,6 +223,7 @@ class Player {
             grav = -1.5;
         }
 
+        //Die when you hit a spike or fall through map
         if(getState("2H") || ypos > height) {
             xpos = spawnx;
             ypos = spawny;
