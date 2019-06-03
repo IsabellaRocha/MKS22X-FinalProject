@@ -178,6 +178,7 @@ class Player {
     }
 
     void update() {
+        boolean dashed = false;;
         xpos += xvel;
         ypos += yvel;
         if(xvel < 0) xvel += .25;
@@ -218,6 +219,7 @@ class Player {
         if(getState("1D") && !jump) {
             grav = 0;
             ypos = ypos - ypos % 16;
+            dashed = false;
         }
         if(jump && getState("1D")) {
             grav = 6;
@@ -254,27 +256,45 @@ class Player {
             ypos -= 4;
         }
 
-        if(dash && right && up) {
+        if(dash && right && up && !down && !left && !dashed) {
             xvel = 5;
             yvel = -5;
+            dashed = true;
         }
-        else if(dash && right && down) {
+        if(dash && right && down && !up && !left && !dashed) {
             xvel = 5;
             yvel = 5;
+            dashed = true;
         }
-        else if(dash && right) {
+        if(dash && right && !down && !up && !left && !dashed) {
             xvel = 5;
+            yvel = 0;
+            dashed = true;
         }
-        if(dash && left && up) {
+        if(dash && !right && !down && up && left && !dashed) {
             xvel = -5;
             yvel = -5;
+            dashed = true;
         }
-        else if(dash && left && down) {
+        if(dash && !right && down && !up && left && !dashed) {
             xvel = -5;
             yvel = 5;
+            dashed = true;
         }
-        else if(dash && left) {
+        if(dash && !right && !down && !up && left && !dashed) {
             xvel = -5;
+            yvel = 0;
+            dashed = true;
+        }
+        if(dash && !right && !down && up && !left && !dashed) {
+            yvel = -5;
+            xvel = 0;
+            dashed = true;
+        }
+        if(dash && !right && down && !up && !left && !dashed) {
+            yvel = 5;
+            xvel = 0;
+            dashed = true;
         }
 
         if(getState("2H") || ypos > height) {
