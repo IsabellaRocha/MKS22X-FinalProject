@@ -81,7 +81,7 @@ class GROUND extends Tile {
                 return "1R";
             }
         }
-        if(p.xpos > xpos + 1 && p.xpos < xpos + tilewidth - 1 || p.xpos + p.playerwidth > xpos + 1 && p.xpos + p.playerwidth < xpos + tilewidth - 1) {
+        if(p.xpos > xpos && p.xpos < xpos + tilewidth - 1 || p.xpos + p.playerwidth > xpos + 1 && p.xpos + p.playerwidth < xpos + tilewidth) {
             // UP
             if(ypos + tileheight + 2.85 >= p.ypos && ypos + tileheight - 2.85 <= p.ypos) {
                 return "1U";
@@ -116,8 +116,8 @@ class HAZARD extends Tile {
         }
 
         if(p.ypos > ypos && p.ypos < ypos + tileheight || p.ypos + p.playerheight > ypos && p.ypos + p.playerheight < ypos + tileheight) {
-            w = (p.xpos >= xpos + tilewidth - 1 && p.xpos <= xpos + tilewidth + 1);         // LEFT
-            e = (xpos - 1 <= p.xpos + p.playerwidth && xpos + 1 >= p.xpos + p.playerwidth);     // RIGHT
+            w = (p.xpos >= xpos + tilewidth - 2 && p.xpos <= xpos + tilewidth + 2);         // LEFT
+            e = (xpos - 2 <= p.xpos + p.playerwidth && xpos + 2 >= p.xpos + p.playerwidth);     // RIGHT
         }
 
         if(n || s || w || e) return "2H";
