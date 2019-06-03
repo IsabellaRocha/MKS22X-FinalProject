@@ -244,9 +244,8 @@ class Player {
         }
         if(!getState("1D") && !getState("1R") && !getState("1L") && dashed) {
             if(start == 0) start = frameCount;
-            end = 0;
-            if(end - start > 75) {
-                end = frameCount;
+            end = frameCount;
+            if(end - start > 25) {
                 ypos -= grav;
                 if (grav > -5) {
                     grav -= .25;
@@ -279,7 +278,7 @@ class Player {
 
         if(dash && right && up && !down && !left && !dashed) {
             if(start == 0) start = frameCount;
-            end = 0;
+            end = frameCount;
             if(end - start < 75) {
                 end = frameCount;
                 xvel = 7;
@@ -289,9 +288,8 @@ class Player {
         }
         if(dash && right && down && !up && !left && !dashed) {
             if(start == 0) start = frameCount;
-            end = 0;
+            end = frameCount;
             if(end - start < 75) {
-                end = frameCount;
                 xvel = 7;
                 yvel = 7;
             }
@@ -299,9 +297,8 @@ class Player {
         }
         if(dash && right && !down && !up && !left && !dashed) {
             if(start == 0) start = frameCount;
-            end = 0;
+            end = frameCount;
             if(end - start < 75) {
-                end = frameCount;
                 xvel = 7;
                 yvel = 0;
             }
@@ -309,9 +306,8 @@ class Player {
         }
         if(dash && !right && !down && up && left && !dashed) {
             if(start == 0) start = frameCount;
-            end = 0;
+            end = frameCount;
             if(end - start < 75) {
-                end = frameCount;
                 xvel = -7;
                 yvel = -7;
             }
@@ -319,9 +315,8 @@ class Player {
         }
         if(dash && !right && down && !up && left && !dashed) {
             if(start == 0) start = frameCount;
-            end = 0;
+            end = frameCount;
             if(end - start < 75) {
-                end = frameCount;
                 xvel = -7;
                 yvel = 7;
             }
@@ -329,9 +324,8 @@ class Player {
         }
         if(dash && !right && !down && !up && left && !dashed) {
             if(start == 0) start = frameCount;
-            end = 0;
+            end = frameCount;
             if(end - start < 75) {
-                end = frameCount;
                 xvel = -7;
                 yvel = 0;
             }
@@ -339,9 +333,8 @@ class Player {
         }
         if(dash && !right && !down && up && !left && !dashed) {
             if(start == 0) start = frameCount;
-            end = 0;
+            end = frameCount;
             if(end - start < 75) {
-                end = frameCount;
                 xvel = 0;
                 yvel = -7;
             }
@@ -349,9 +342,8 @@ class Player {
         }
         if(dash && !right && down && !up && !left && !dashed) {
             if(start == 0) start = frameCount;
-            end = 0;
+            end = frameCount;
             if(end - start < 75) {
-                end = frameCount;
                 xvel = 0;
                 yvel = 7;
             }
