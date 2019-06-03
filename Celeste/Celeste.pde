@@ -70,7 +70,7 @@ class GROUND extends Tile {
     }
 
     String interact(Player p) {
-        if(p.ypos > ypos && p.ypos < ypos + tileheight || p.ypos + p.playerheight > ypos + 2 && p.ypos + p.playerheight < ypos + tileheight) {
+        if(p.ypos > ypos && p.ypos < ypos + tileheight || p.ypos + p.playerheight > ypos && p.ypos + p.playerheight < ypos + tileheight) {
             // LEFT
             if(p.xpos >= xpos + tilewidth - 1 && p.xpos <= xpos + tilewidth + 1) {
                 return "1L";
@@ -81,7 +81,7 @@ class GROUND extends Tile {
                 return "1R";
             }
         }
-        if(p.xpos > xpos && p.xpos < xpos + tilewidth || p.xpos + p.playerwidth > xpos + 1.3 && p.xpos + p.playerwidth < xpos + tilewidth) {
+        if(p.xpos > xpos + 1 && p.xpos < xpos + tilewidth - 1 || p.xpos + p.playerwidth > xpos + 1 && p.xpos + p.playerwidth < xpos + tilewidth - 1) {
             // UP
             if(ypos + tileheight + 2.85 >= p.ypos && ypos + tileheight - 2.85 <= p.ypos) {
                 return "1U";
@@ -207,6 +207,7 @@ class Player {
         //Don't fall through the floor
         if(getState("1D") && !jump) {
             grav = 0;
+            ypos = ypos - ypos % 16;
         }
         if(jump && getState("1D")) {
             grav = 6;
