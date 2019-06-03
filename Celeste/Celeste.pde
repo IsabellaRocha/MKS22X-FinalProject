@@ -178,11 +178,14 @@ class Player {
     }
 
     void update() {
+        xpos += xvel;
+        if (xvel < 0) xvel += .25;
+        if (xvel > 0) xvel -= .25;
         if(left && !getState("1L") && xpos > 0) {
             xpos -= 3;
         }
 
-        if(right && !getState("1R") && xpos < width) {
+        if(right && !getState("1R") && xpos < width && xvel == 0) {
             xpos += 3;
         }
 
@@ -223,11 +226,16 @@ class Player {
         }
 
         //Falling when against the wall
-        if(!getState("1D") && getState("1R") || !getState("1D") && getState("1L")) {
+        if(!getState("1D") && getState("1R") && !jump || !getState("1D") && getState("1L") && !jump) {
             ypos -= grav;
             if(grav > -1.5) {
                 grav -= .25;
             }
+        }
+        if(!getState("1D") && getState("1R") && jump) {
+            xvel = -6;
+            grav = 5;
+            ypos -= 4;
         }
 
         if(getState("2H") || ypos > height) {
