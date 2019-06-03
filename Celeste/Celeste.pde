@@ -147,9 +147,6 @@ class Player {
 
     boolean dashed;
 
-    // time after dash for normal behavior to be restored
-    boolean timeUp;
-
     Player(float xpos, float ypos) {
         this.xpos = xpos;
         this.ypos = ypos;
@@ -166,7 +163,6 @@ class Player {
         playerheight = 28;
 
         dashed = false;
-        timeUp = true;
 
         img = loadImage("img/izze.png");
     }
@@ -186,7 +182,7 @@ class Player {
     }
 
     int start = 0;
-    int end = 75;
+    int end = 0;
 
     void update() {
         xpos += xvel;
@@ -232,6 +228,7 @@ class Player {
             yvel = 0;
             ypos = ypos - ypos % 16;
             dashed = false;
+            start = 0;
         }
         if(jump && getState("1D")) {
             grav = 6;
@@ -239,11 +236,23 @@ class Player {
         }
 
         //Falling in air
-        if(!getState("1D") && !getState("1R") && !getState("1L") && timeUp) {
+        if(!getState("1D") && !getState("1R") && !getState("1L") && !dashed) {
             ypos -= grav;
             if (grav > -5) {
                 grav -= .25;
             }
+        }
+        if(!getState("1D") && !getState("1R") && !getState("1L") && dashed) {
+            if(start == 0) start = frameCount;
+            end = 0;
+            if(end - start > 75) {
+                end = frameCount;
+                ypos -= grav;
+                if (grav > -5) {
+                    grav -= .25;
+                }
+            }
+
         }
 
         //Falling when against the wall
@@ -268,12 +277,9 @@ class Player {
             ypos -= 4;
         }
 
-        if(end - start < 75) {
-            timeUp = false;
-        }
-        else timeUp = true;
         if(dash && right && up && !down && !left && !dashed) {
-            start = frameCount;
+            if(start == 0) start = frameCount;
+            end = 0;
             if(end - start < 75) {
                 end = frameCount;
                 xvel = 7;
@@ -282,7 +288,7 @@ class Player {
             dashed = true;
         }
         if(dash && right && down && !up && !left && !dashed) {
-            start = frameCount;
+            if(start == 0) start = frameCount;
             end = 0;
             if(end - start < 75) {
                 end = frameCount;
@@ -292,7 +298,7 @@ class Player {
             dashed = true;
         }
         if(dash && right && !down && !up && !left && !dashed) {
-            start = frameCount;
+            if(start == 0) start = frameCount;
             end = 0;
             if(end - start < 75) {
                 end = frameCount;
@@ -302,7 +308,7 @@ class Player {
             dashed = true;
         }
         if(dash && !right && !down && up && left && !dashed) {
-            start = frameCount;
+            if(start == 0) start = frameCount;
             end = 0;
             if(end - start < 75) {
                 end = frameCount;
@@ -312,7 +318,7 @@ class Player {
             dashed = true;
         }
         if(dash && !right && down && !up && left && !dashed) {
-            start = frameCount;
+            if(start == 0) start = frameCount;
             end = 0;
             if(end - start < 75) {
                 end = frameCount;
@@ -322,7 +328,7 @@ class Player {
             dashed = true;
         }
         if(dash && !right && !down && !up && left && !dashed) {
-            start = frameCount;
+            if(start == 0) start = frameCount;
             end = 0;
             if(end - start < 75) {
                 end = frameCount;
@@ -332,7 +338,7 @@ class Player {
             dashed = true;
         }
         if(dash && !right && !down && up && !left && !dashed) {
-            start = frameCount;
+            if(start == 0) start = frameCount;
             end = 0;
             if(end - start < 75) {
                 end = frameCount;
@@ -342,7 +348,7 @@ class Player {
             dashed = true;
         }
         if(dash && !right && down && !up && !left && !dashed) {
-            start = frameCount;
+            if(start == 0) start = frameCount;
             end = 0;
             if(end - start < 75) {
                 end = frameCount;
