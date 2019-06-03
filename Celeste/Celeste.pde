@@ -50,6 +50,7 @@ abstract class Tile {
     }
 
     abstract String interact(Player p);
+    abstract int type();
 }
 
 class AERIAL extends Tile {
@@ -60,6 +61,9 @@ class AERIAL extends Tile {
 
     String interact(Player p) {
         return "0A";
+    }
+    int type() {
+        return 0;
     }
 }
 
@@ -95,6 +99,9 @@ class GROUND extends Tile {
 
         return "0A";
     }
+    int type() {
+        return 1;
+    }
 }
 
 class HAZARD extends Tile {
@@ -122,6 +129,9 @@ class HAZARD extends Tile {
 
         if(n || s || w || e) return "2H";
         return "0A";
+    }
+    int type() {
+        return 2;
     }
 }
 
@@ -176,6 +186,16 @@ class Player {
 
         return false;
     }
+
+    Tile which(String in) {
+        for(Tile[] row : mappy.data) {
+            for(Tile t : row) {
+                if(in.equals(t.interact(madeline))) return t;
+            }
+        }
+
+        return null;
+    }
     void respawn() {
         xpos = spawnx;
         ypos = spawny;
@@ -199,8 +219,10 @@ class Player {
         if(right && !getState("1R") && xpos < width && xvel == 0) {
             xpos += 3;
         }
-        if(xvel != 0 && getState("1R") || xvel != 0 && getState("1L")) {
+        if(getState("1R") || getState("1L")) {
             xvel = 0;
+            if(xpos % 1 > .5) xpos = (int) (xpos + 1);
+            else xpos = (int)xpos;
         }
 
         //Switching levels
@@ -295,7 +317,7 @@ class Player {
             }
             dashed = true;
         }
-        if(dash && right && !down && !up && !left && !dashed) {
+        if(dash && right && !down && !up && !left && !dashed && !getState("1R")) {
             if(start == 0) start = frameCount;
             end = frameCount;
             if(end - start < 75) {
@@ -322,7 +344,7 @@ class Player {
             }
             dashed = true;
         }
-        if(dash && !right && !down && !up && left && !dashed) {
+        if(dash && !right && !down && !up && left && !dashed && !getState("1L")) {
             if(start == 0) start = frameCount;
             end = frameCount;
             if(end - start < 75) {
@@ -331,7 +353,7 @@ class Player {
             }
             dashed = true;
         }
-        if(dash && !right && !down && up && !left && !dashed) {
+        if(dash && !right && !down && up && !left && !dashed && !getState("1U")) {
             if(start == 0) start = frameCount;
             end = frameCount;
             if(end - start < 75) {
@@ -340,7 +362,7 @@ class Player {
             }
             dashed = true;
         }
-        if(dash && !right && down && !up && !left && !dashed) {
+        if(dash && !right && down && !up && !left && !dashed && !getState("1D")) {
             if(start == 0) start = frameCount;
             end = frameCount;
             if(end - start < 75) {
