@@ -202,7 +202,7 @@ class Player {
             respawn();
         }
 
-        /*
+
         //Stop when you hit bottom of a tile
         if(getState("1U")) {
             grav = 0;
@@ -224,9 +224,9 @@ class Player {
                 grav -= .25;
             }
         }
-        */
 
-        /*
+
+
         // falling when against the wall
         if(!getState("1D") && getState("1R") || !getState("1D") && getState("1L")) {
             ypos -= grav;
@@ -238,7 +238,7 @@ class Player {
             xpos = spawnx;
             ypos = spawny;
         }
-        */
+        
 
     }
 
