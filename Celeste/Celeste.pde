@@ -181,7 +181,7 @@ class Player {
         xpos += xvel;
         if (xvel < 0) xvel += .25;
         if (xvel > 0) xvel -= .25;
-        if(left && !getState("1L") && xpos > 0) {
+        if(left && !getState("1L") && xpos > 0 && xvel == 0) {
             xpos -= 3;
         }
 
@@ -234,6 +234,11 @@ class Player {
         }
         if(!getState("1D") && getState("1R") && jump) {
             xvel = -6;
+            grav = 5;
+            ypos -= 4;
+        }
+        if(!getState("1D") && getState("1L") && jump) {
+            xvel = 6;
             grav = 5;
             ypos -= 4;
         }
