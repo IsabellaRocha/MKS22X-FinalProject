@@ -70,7 +70,7 @@ class GROUND extends Tile {
     }
 
     String interact(Player p) {
-        if(p.ypos > ypos && p.ypos < ypos + tileheight || p.ypos + p.playerheight > ypos + .25 && p.ypos + p.playerheight < ypos + tileheight - .25) {
+        if(p.ypos > ypos && p.ypos < ypos + tileheight || p.ypos + p.playerheight > ypos + 2 && p.ypos + p.playerheight < ypos + tileheight) {
             // LEFT
             if(p.xpos >= xpos + tilewidth - 1 && p.xpos <= xpos + tilewidth + 1) {
                 return "1L";
