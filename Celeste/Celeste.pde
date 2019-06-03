@@ -72,16 +72,16 @@ class GROUND extends Tile {
     String interact(Player p) {
         if(p.ypos > ypos && p.ypos < ypos + tileheight || p.ypos + p.playerheight > ypos + .25 && p.ypos + p.playerheight < ypos + tileheight - .25) {
             // LEFT
-            if(p.xpos >= xpos + tilewidth && p.xpos <= xpos + tilewidth) {
+            if(p.xpos >= xpos + tilewidth - 1 && p.xpos <= xpos + tilewidth + 1) {
                 return "1L";
             }
 
             // RIGHT
-            if(xpos <= p.xpos + p.playerwidth && xpos >= p.xpos + p.playerwidth) {
+            if(xpos - 1 <= p.xpos + p.playerwidth && xpos + 1 >= p.xpos + p.playerwidth) {
                 return "1R";
             }
         }
-        if(p.xpos > xpos - .2 && p.xpos < xpos + tilewidth + .2 || p.xpos + p.playerwidth > xpos && p.xpos + p.playerwidth < xpos + tilewidth) {
+        if(p.xpos > xpos && p.xpos < xpos + tilewidth || p.xpos + p.playerwidth > xpos && p.xpos + p.playerwidth < xpos + tilewidth) {
             // UP
             if(ypos + tileheight + 2.85 >= p.ypos && ypos + tileheight - 2.85 <= p.ypos) {
                 return "1U";
@@ -111,13 +111,13 @@ class HAZARD extends Tile {
         e = false;
 
         if(p.xpos >= xpos && p.xpos < xpos + tilewidth) {
-            n = ypos + tileheight >= p.ypos && ypos + tileheight <= p.ypos;        // UP
-            s = ypos >= p.ypos + p.playerheight && ypos <= p.ypos + p.playerheight;    // DOWN
+            n = ypos + tileheight + 2.85 >= p.ypos && ypos + tileheight - 2.85 <= p.ypos;        // UP
+            s = ypos + 2.85 >= p.ypos + p.playerheight && ypos - 2.85 <= p.ypos + p.playerheight;    // DOWN
         }
 
         if(p.ypos > ypos && p.ypos < ypos + tileheight || p.ypos + p.playerheight > ypos && p.ypos + p.playerheight < ypos + tileheight) {
-            w = (p.xpos >= xpos + tilewidth && p.xpos <= xpos + tilewidth);         // LEFT
-            e = (xpos <= p.xpos + p.playerwidth && xpos >= p.xpos + p.playerwidth);     // RIGHT
+            w = (p.xpos >= xpos + tilewidth - 1 && p.xpos <= xpos + tilewidth + 1);         // LEFT
+            e = (xpos - 1 <= p.xpos + p.playerwidth && xpos + 1 >= p.xpos + p.playerwidth);     // RIGHT
         }
 
         if(n || s || w || e) return "2H";
@@ -127,7 +127,7 @@ class HAZARD extends Tile {
 
 class Player {
 
-    // PImage img;
+    PImage img;
 
     // player position
     float xpos, ypos;
@@ -145,24 +145,22 @@ class Player {
     // player spawn point
     float spawnx, spawny;
 
-    Player() {
-        spawnx = 24;
-        spawny = 388;
+    Player(float xpos, float ypos) {
+        this.xpos = xpos;
+        this.ypos = ypos;
 
-        respawn();
+        spawnx = xpos;
+        spawny = ypos;
 
         xvel = 0.00;
         yvel = 0.00;
 
         grav = 0.00;
 
-        // playerwidth = 36;
-        // playerheight = 28;
-
         playerwidth = 30;
         playerheight = 28;
 
-        // img = loadImage("img/izze.png");
+         img = loadImage("img/izze.png");
     }
 
     boolean getState(String in) {
@@ -174,7 +172,6 @@ class Player {
 
         return false;
     }
-
     void respawn() {
         xpos = spawnx;
         ypos = spawny;
@@ -198,14 +195,13 @@ class Player {
                 spawnx = 24;
                 spawny = 388;
             }
-
             respawn();
         }
-
 
         //Stop when you hit bottom of a tile
         if(getState("1U")) {
             grav = 0;
+            ypos += 1;
         }
 
         //Don't fall through the floor
@@ -220,35 +216,32 @@ class Player {
         //Falling in air
         if(!getState("1D") && !getState("1R") && !getState("1L")) {
             ypos -= grav;
-            if (grav > -4) {
+            if (grav > -5) {
                 grav -= .25;
             }
         }
 
-
-
-        // falling when against the wall
+        //Falling when against the wall
         if(!getState("1D") && getState("1R") || !getState("1D") && getState("1L")) {
             ypos -= grav;
-            grav = -1.5;
+            if(grav > -1.5) {
+                grav -= .25;
+            }
         }
 
-        //Die when you hit a spike or fall through map
         if(getState("2H") || ypos > height) {
-            xpos = spawnx;
-            ypos = spawny;
+            respawn();
         }
-        
 
     }
 
     void display() {
-        // image(img, xpos, ypos, playerwidth, playerheight);
+         image(img, xpos, ypos, playerwidth, playerheight);
 
-        noStroke();
+    //    noStroke();
 
-        fill(215, 20, 20);
-        rect(xpos, ypos, playerwidth, playerheight);
+    //    fill(215, 20, 20);
+//        rect(xpos, ypos, playerwidth, playerheight);
     }
 }
 
@@ -289,7 +282,7 @@ void setup() {
     LVL2 = loadImage("img/LEVEL_02.png");
 
     mappy = new Map();
-    madeline = new Player();
+    madeline = new Player(24, 388);
 }
 
 void draw() {
