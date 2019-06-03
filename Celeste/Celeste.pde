@@ -145,6 +145,8 @@ class Player {
     // player spawn point
     float spawnx, spawny;
 
+    boolean dashed;
+
     Player(float xpos, float ypos) {
         this.xpos = xpos;
         this.ypos = ypos;
@@ -160,7 +162,9 @@ class Player {
         playerwidth = 30;
         playerheight = 28;
 
-         img = loadImage("img/izze.png");
+        dashed = false;
+
+        img = loadImage("img/izze.png");
     }
 
     boolean getState(String in) {
@@ -178,7 +182,6 @@ class Player {
     }
 
     void update() {
-        boolean dashed = false;;
         xpos += xvel;
         ypos += yvel;
         if(xvel < 0) xvel += .25;
@@ -193,7 +196,7 @@ class Player {
         if(right && !getState("1R") && xpos < width && xvel == 0) {
             xpos += 3;
         }
-        if(xvel > 0 && getState("1R") || xvel < 0 && getState("1L")) {
+        if(xvel != 0 && getState("1R") || xvel != 0 && getState("1L")) {
             xvel = 0;
         }
 
@@ -212,12 +215,14 @@ class Player {
         //Stop when you hit bottom of a tile
         if(getState("1U")) {
             grav = 0;
+            yvel = 0;
             ypos += 1;
         }
 
         //Don't fall through the floor
         if(getState("1D") && !jump) {
             grav = 0;
+            yvel = 0;
             ypos = ypos - ypos % 16;
             dashed = false;
         }
@@ -244,56 +249,96 @@ class Player {
 
         //Wall jumping off right wall
         if(!getState("1D") && getState("1R") && jump) {
-            xvel = -5;
+            xvel = -6;
             grav = 5;
             ypos -= 4;
         }
 
         //Wall jumping off left wall
         if(!getState("1D") && getState("1L") && jump) {
-            xvel = 5;
+            xvel = 6;
             grav = 5;
             ypos -= 4;
         }
 
         if(dash && right && up && !down && !left && !dashed) {
-            xvel = 5;
-            yvel = -5;
+            int start = frameCount;
+            int end = 0;
+            if(end - start < 75) {
+                end = frameCount;
+                xvel = 7;
+                yvel = -7;
+            }
             dashed = true;
         }
         if(dash && right && down && !up && !left && !dashed) {
-            xvel = 5;
-            yvel = 5;
+            int start = frameCount;
+            int end = 0;
+            if(end - start < 75) {
+                end = frameCount;
+                xvel = 7;
+                yvel = 7;
+            }
             dashed = true;
         }
         if(dash && right && !down && !up && !left && !dashed) {
-            xvel = 5;
-            yvel = 0;
+            int start = frameCount;
+            int end = 0;
+            if(end - start < 75) {
+                end = frameCount;
+                xvel = 7;
+                yvel = 0;
+            }
             dashed = true;
         }
         if(dash && !right && !down && up && left && !dashed) {
-            xvel = -5;
-            yvel = -5;
+            int start = frameCount;
+            int end = 0;
+            if(end - start < 75) {
+                end = frameCount;
+                xvel = -7;
+                yvel = -7;
+            }
             dashed = true;
         }
         if(dash && !right && down && !up && left && !dashed) {
-            xvel = -5;
-            yvel = 5;
+            int start = frameCount;
+            int end = 0;
+            if(end - start < 75) {
+                end = frameCount;
+                xvel = -7;
+                yvel = 7;
+            }
             dashed = true;
         }
         if(dash && !right && !down && !up && left && !dashed) {
-            xvel = -5;
-            yvel = 0;
+            int start = frameCount;
+            int end = 0;
+            if(end - start < 75) {
+                end = frameCount;
+                xvel = -7;
+                yvel = 0;
+            }
             dashed = true;
         }
         if(dash && !right && !down && up && !left && !dashed) {
-            yvel = -5;
-            xvel = 0;
+            int start = frameCount;
+            int end = 0;
+            if(end - start < 75) {
+                end = frameCount;
+                xvel = 0;
+                yvel = -7;
+            }
             dashed = true;
         }
         if(dash && !right && down && !up && !left && !dashed) {
-            yvel = 5;
-            xvel = 0;
+            int start = frameCount;
+            int end = 0;
+            if(end - start < 75) {
+                end = frameCount;
+                xvel = 0;
+                yvel = 7;
+            }
             dashed = true;
         }
 
