@@ -147,6 +147,9 @@ class Player {
 
     boolean dashed;
 
+    // time after dash for normal behavior to be restored
+    boolean timeUp;
+
     Player(float xpos, float ypos) {
         this.xpos = xpos;
         this.ypos = ypos;
@@ -163,6 +166,7 @@ class Player {
         playerheight = 28;
 
         dashed = false;
+        timeUp = true;
 
         img = loadImage("img/izze.png");
     }
@@ -180,6 +184,9 @@ class Player {
         xpos = spawnx;
         ypos = spawny;
     }
+
+    int start = 0;
+    int end = 75;
 
     void update() {
         xpos += xvel;
@@ -232,7 +239,7 @@ class Player {
         }
 
         //Falling in air
-        if(!getState("1D") && !getState("1R") && !getState("1L")) {
+        if(!getState("1D") && !getState("1R") && !getState("1L") && timeUp) {
             ypos -= grav;
             if (grav > -5) {
                 grav -= .25;
@@ -261,9 +268,12 @@ class Player {
             ypos -= 4;
         }
 
+        if(end - start < 75) {
+            timeUp = false;
+        }
+        else timeUp = true;
         if(dash && right && up && !down && !left && !dashed) {
-            int start = frameCount;
-            int end = 0;
+            start = frameCount;
             if(end - start < 75) {
                 end = frameCount;
                 xvel = 7;
@@ -272,8 +282,8 @@ class Player {
             dashed = true;
         }
         if(dash && right && down && !up && !left && !dashed) {
-            int start = frameCount;
-            int end = 0;
+            start = frameCount;
+            end = 0;
             if(end - start < 75) {
                 end = frameCount;
                 xvel = 7;
@@ -282,8 +292,8 @@ class Player {
             dashed = true;
         }
         if(dash && right && !down && !up && !left && !dashed) {
-            int start = frameCount;
-            int end = 0;
+            start = frameCount;
+            end = 0;
             if(end - start < 75) {
                 end = frameCount;
                 xvel = 7;
@@ -292,8 +302,8 @@ class Player {
             dashed = true;
         }
         if(dash && !right && !down && up && left && !dashed) {
-            int start = frameCount;
-            int end = 0;
+            start = frameCount;
+            end = 0;
             if(end - start < 75) {
                 end = frameCount;
                 xvel = -7;
@@ -302,8 +312,8 @@ class Player {
             dashed = true;
         }
         if(dash && !right && down && !up && left && !dashed) {
-            int start = frameCount;
-            int end = 0;
+            start = frameCount;
+            end = 0;
             if(end - start < 75) {
                 end = frameCount;
                 xvel = -7;
@@ -312,8 +322,8 @@ class Player {
             dashed = true;
         }
         if(dash && !right && !down && !up && left && !dashed) {
-            int start = frameCount;
-            int end = 0;
+            start = frameCount;
+            end = 0;
             if(end - start < 75) {
                 end = frameCount;
                 xvel = -7;
@@ -322,8 +332,8 @@ class Player {
             dashed = true;
         }
         if(dash && !right && !down && up && !left && !dashed) {
-            int start = frameCount;
-            int end = 0;
+            start = frameCount;
+            end = 0;
             if(end - start < 75) {
                 end = frameCount;
                 xvel = 0;
@@ -332,8 +342,8 @@ class Player {
             dashed = true;
         }
         if(dash && !right && down && !up && !left && !dashed) {
-            int start = frameCount;
-            int end = 0;
+            start = frameCount;
+            end = 0;
             if(end - start < 75) {
                 end = frameCount;
                 xvel = 0;
