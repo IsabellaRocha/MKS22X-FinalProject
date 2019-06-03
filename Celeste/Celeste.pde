@@ -202,6 +202,12 @@ class Player {
         if(xvel != 0 && getState("1R") || xvel != 0 && getState("1L")) {
             xvel = 0;
         }
+        if(getState("1R") && (xpos + playerwidth) % 16 != 0) {
+            xpos = ((xpos + playerwidth) - 16 % (xpos + playerwidth)) - playerwidth;
+        }
+        if(getState("1L") && xpos % 16 != 0) {
+            xpos = xpos - xpos % 16;
+        }
 
         //Switching levels
         if(ypos <= 0) {
