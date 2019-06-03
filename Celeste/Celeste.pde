@@ -188,6 +188,9 @@ class Player {
         if(right && !getState("1R") && xpos < width && xvel == 0) {
             xpos += 3;
         }
+        if(xvel > 0 && getState("1R") || xvel < 0 && getState("1L")) {
+            xvel = 0;
+        }
 
         //Switching levels
         if(ypos <= 0) {
@@ -232,13 +235,17 @@ class Player {
                 grav -= .25;
             }
         }
+
+        //Wall jumping off right wall
         if(!getState("1D") && getState("1R") && jump) {
-            xvel = -6;
+            xvel = -5;
             grav = 5;
             ypos -= 4;
         }
+
+        //Wall jumping off left wall
         if(!getState("1D") && getState("1L") && jump) {
-            xvel = 6;
+            xvel = 5;
             grav = 5;
             ypos -= 4;
         }
