@@ -412,7 +412,7 @@ class Player {
             grav = 0;
         }
 
-        //Dying when you hit spike or fall through bottom of map
+        //Dying when you hit spike or fall through bottom of world
         if(getState("2H") || ypos > height) {
             respawn();
         }
