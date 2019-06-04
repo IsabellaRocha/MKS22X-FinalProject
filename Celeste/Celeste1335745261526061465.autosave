@@ -12,8 +12,7 @@ class Map {
 
         String[] maps = {
             "LVL1.txt",
-            "LVL2.txt",
-            "VICTORY.txt"
+            "LVL2.txt"
         };
         map_archive = maps;
 
@@ -73,23 +72,23 @@ class GROUND extends Tile {
     String interact(Player p) {
         if(p.ypos > ypos && p.ypos < ypos + tileheight || p.ypos + p.playerheight > ypos && p.ypos + p.playerheight < ypos + tileheight) {
             // LEFT
-            if(p.xpos >= xpos + tilewidth - 2.5 && p.xpos <= xpos + tilewidth + 2.5) {
+            if(p.xpos >= xpos + tilewidth - 1 && p.xpos <= xpos + tilewidth + 1) {
                 return "1L";
             }
 
             // RIGHT
-            if(xpos - 2.5 <= p.xpos + p.playerwidth && xpos + 2.5 >= p.xpos + p.playerwidth) {
+            if(xpos - 1 <= p.xpos + p.playerwidth && xpos + 1 >= p.xpos + p.playerwidth) {
                 return "1R";
             }
         }
         if(p.xpos > xpos && p.xpos < xpos + tilewidth - 1 || p.xpos + p.playerwidth > xpos + 1 && p.xpos + p.playerwidth < xpos + tilewidth) {
             // UP
-            if(ypos + tileheight + 2.5 >= p.ypos && ypos + tileheight - 2.5 <= p.ypos) {
+            if(ypos + tileheight + 2.85 >= p.ypos && ypos + tileheight - 2.85 <= p.ypos) {
                 return "1U";
             }
 
             // DOWN
-            if(ypos + 2.5 >= p.ypos + p.playerheight && ypos - 2.5 <= p.ypos + p.playerheight) {
+            if(ypos + 2.85 >= p.ypos + p.playerheight && ypos - 2.85 <= p.ypos + p.playerheight) {
                 return "1D";
             }
         }
@@ -146,9 +145,6 @@ class Player {
     // player spawn point
     float spawnx, spawny;
 
-    boolean dashed;
-
-
     Player(float xpos, float ypos) {
         this.xpos = xpos;
         this.ypos = ypos;
@@ -164,9 +160,7 @@ class Player {
         playerwidth = 30;
         playerheight = 28;
 
-        dashed = false;
-
-        img = loadImage("img/izze.png");
+         img = loadImage("img/izze.png");
     }
 
     boolean getState(String in) {
@@ -178,61 +172,21 @@ class Player {
 
         return false;
     }
-
-    Tile getTile(String in) {
-        for(Tile[] row : mappy.data) {
-            for(Tile t : row) {
-                if(in.equals(t.interact(madeline))) return t;
-            }
-        }
-        return null;
-    }
     void respawn() {
         xpos = spawnx;
         ypos = spawny;
     }
 
-    int start = 0;
-    int end = 0;
-
     void update() {
         xpos += xvel;
-        ypos += yvel;
-        if(xvel < 0) xvel += .25;
-        if(xvel > 0) xvel -= .25;
-        if(yvel < 0) yvel += .25;
-        if(yvel > 0) yvel -= .25;
-
-        if(left && !getState("1L") && xpos > 0 && xvel == 0) {
+        if (xvel != 0) xvel -= 1;
+        if(left && !getState("1L") && xpos > 0) {
             xpos -= 3;
         }
 
-        if(right && !getState("1R") && xpos < width && xvel == 0) {
+        if(right && !getState("1R") && xpos < width) {
             xpos += 3;
         }
-        if(getState("1R")) {
-            xvel = 0;
-            if(getTile("1R") == null) {
-                if(xpos % 1 > .5) ypos = (int) (xpos + 1);
-                else xpos = (int)xpos;
-            }
-            else {
-                xpos = getTile("1R").xpos - playerwidth;
-            }
-        }
-
-        if(getState("1L")) {
-            xvel = 0;
-            if(getTile("1L") == null) {
-                if(xpos % 1 > .5) ypos = (int) (xpos + 1);
-                else xpos = (int)xpos;
-            }
-            else {
-                xpos = getTile("1L").xpos + getTile("1L").tilewidth;
-            }
-        }
-        if(xpos < 0) xpos = 0;
-        if(xpos > width) xpos = width - playerwidth;
 
         //Switching levels
         if(ypos <= 0) {
@@ -249,37 +203,13 @@ class Player {
         //Stop when you hit bottom of a tile
         if(getState("1U")) {
             grav = 0;
-            yvel = 0;
             ypos += 1;
-        }
-
-        //Wall jumping off right wall
-        if(!getState("1D") && getState("1R") && jump) {
-            xvel = -6;
-            grav = 5;
-            ypos -= 4;
-        }
-
-        //Wall jumping off left wall
-        if(!getState("1D") && getState("1L") && jump) {
-            xvel = 6;
-            grav = 5;
-            ypos -= 4;
         }
 
         //Don't fall through the floor
         if(getState("1D") && !jump) {
             grav = 0;
-            yvel = 0;
-            if(getTile("1D") == null) {
-                if(ypos % 1 > .5) ypos = (int) (ypos + 1);
-                else ypos = (int)ypos;
-            }
-            else {
-                ypos = getTile("1D").ypos - playerheight;
-            }
-            dashed = false;
-            start = 0;
+            ypos = ypos - ypos % 16;
         }
         if(jump && getState("1D")) {
             grav = 6;
@@ -287,24 +217,11 @@ class Player {
         }
 
         //Falling in air
-        if(!getState("1D") && !getState("1R") && !getState("1L") && !dashed) {
+        if(!getState("1D") && !getState("1R") && !getState("1L")) {
             ypos -= grav;
             if (grav > -5) {
                 grav -= .25;
             }
-        }
-
-        //Gravity doesn't interfere while dash is still in effect
-        if(!getState("1D") && !getState("1R") && !getState("1L") && dashed) {
-            if(start == 0) start = frameCount;
-            end = frameCount;
-            if(end - start > 27) {
-                ypos -= grav;
-                if (grav > -5) {
-                    grav -= .25;
-                }
-            }
-
         }
 
         //Falling when against the wall
@@ -314,95 +231,25 @@ class Player {
                 grav -= .25;
             }
         }
-
-        if(dash && right && up && !down && !left && !dashed) {
-            if(start == 0) start = frameCount;
-            end = frameCount;
-            if(end - start < 75) {
-                end = frameCount;
-                xvel = 7;
-                yvel = -7;
-            }
-            dashed = true;
-            grav = 0;
-        }
-        if(dash && right && down && !up && !left && !dashed) {
-            if(start == 0) start = frameCount;
-            end = frameCount;
-            if(end - start < 75) {
-                xvel = 7;
-                yvel = 7;
-            }
-            dashed = true;
-            grav = 0;
-        }
-        if(dash && right && !down && !up && !left && !dashed && !getState("1R")) {
-            if(start == 0) start = frameCount;
-            end = frameCount;
-            if(end - start < 75) {
-                xvel = 7;
-                yvel = 0;
-            }
-            dashed = true;
-            grav = 0;
-        }
-        if(dash && !right && !down && up && left && !dashed) {
-            if(start == 0) start = frameCount;
-            end = frameCount;
-            if(end - start < 75) {
-                xvel = -7;
-                yvel = -7;
-            }
-            dashed = true;
-        }
-        if(dash && !right && down && !up && left && !dashed) {
-            if(start == 0) start = frameCount;
-            end = frameCount;
-            if(end - start < 75) {
-                xvel = -7;
-                yvel = 7;
-            }
-            dashed = true;
-            grav = 0;
-        }
-        if(dash && !right && !down && !up && left && !dashed && !getState("1L")) {
-            if(start == 0) start = frameCount;
-            end = frameCount;
-            if(end - start < 75) {
-                xvel = -7;
-                yvel = 0;
-            }
-            dashed = true;
-            grav = 0;
-        }
-        if(dash && !right && !down && up && !left && !dashed && !getState("1U")) {
-            if(start == 0) start = frameCount;
-            end = frameCount;
-            if(end - start < 75) {
-                xvel = 0;
-                yvel = -7;
-            }
-            dashed = true;
-            grav = 0;
-        }
-        if(dash && !right && down && !up && !left && !dashed && !getState("1D")) {
-            if(start == 0) start = frameCount;
-            end = frameCount;
-            if(end - start < 75) {
-                xvel = 0;
-                yvel = 7;
-            }
-            dashed = true;
-            grav = 0;
+        if(!getState("1D") && getState("1R") && jump) {
+            xvel = -3;
+            grav = 5;
+            ypos -= 4;
         }
 
         if(getState("2H") || ypos > height) {
             respawn();
         }
+
     }
 
     void display() {
          image(img, xpos, ypos, playerwidth, playerheight);
+
+    //    noStroke();
+
+    //    fill(215, 20, 20);
+//        rect(xpos, ypos, playerwidth, playerheight);
     }
 }
 
@@ -429,11 +276,8 @@ boolean setMove(int k, boolean active) {
     return active;
 }
 
-
-//TODO: Add victory screen image after completion of level2;
 PImage LVL1;
 PImage LVL2;
-PImage VICTORY;
 
 Map mappy;
 Player madeline;
@@ -444,7 +288,6 @@ void setup() {
 
     LVL1 = loadImage("img/LEVEL_01.png");
     LVL2 = loadImage("img/LEVEL_02.png");
-    VICTORY = loadImage("img/VICTORY.png");
 
     mappy = new Map();
     madeline = new Player(24, 388);
@@ -454,9 +297,6 @@ void draw() {
     if(mappy.room_ID == 0) image(LVL1, 0, 0);
     if(mappy.room_ID == 1) image(LVL2, 0, 0);
 
-    if(mappy.room_ID != 2) {
-        madeline.display();
-        madeline.update();
-    }
-    else image(VICTORY, 0, 0);
+    madeline.display();
+    madeline.update();
 }
