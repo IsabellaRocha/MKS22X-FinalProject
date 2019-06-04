@@ -82,6 +82,7 @@ class GROUND extends Tile {
                 return "1D";
             }
         }
+
         if(p.ypos > ypos && p.ypos < ypos + tileheight || p.ypos + p.playerheight > ypos && p.ypos + p.playerheight < ypos + tileheight) {
             // LEFT
             if(p.xpos >= xpos + tilewidth - 2.5 && p.xpos <= xpos + tilewidth + 2.5) {
@@ -93,7 +94,6 @@ class GROUND extends Tile {
                 return "1R";
             }
         }
-
 
         return "0A";
     }
@@ -178,7 +178,6 @@ class Player {
                 if(in.equals(t.interact(madeline))) return true;
             }
         }
-
         return false;
     }
 
