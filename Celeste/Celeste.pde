@@ -147,6 +147,7 @@ class Player {
 
     boolean dashed;
 
+
     Player(float xpos, float ypos) {
         this.xpos = xpos;
         this.ypos = ypos;
@@ -397,6 +398,7 @@ class Player {
         if(getState("2H") || ypos > height) {
             respawn();
         }
+        jump = false;
     }
 
     void display() {
@@ -411,12 +413,17 @@ class Player {
 
 boolean dash, jump;
 boolean up, down, left, right;
+int lastKey = 0;
 
 void keyPressed() {
+    if (lastKey == 0 || lastKey != keyCode) {
+        lastKey = keyCode;
+    }
     setMove(keyCode, true);
 }
 
 void keyReleased() {
+    lastKey = 0;
     setMove(keyCode, false);
 }
 
