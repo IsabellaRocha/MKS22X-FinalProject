@@ -84,7 +84,7 @@ class GROUND extends Tile {
         }
         if(p.xpos >= xpos && p.xpos < xpos + tilewidth || p.xpos + p.playerwidth > xpos && p.xpos + p.playerwidth <= xpos + tilewidth) {
             // UP
-            if(ypos + tileheight + 2.5 >= p.ypos && ypos + tileheight - 2.5 <= p.ypos) {
+            if(ypos + tileheight + 3 >= p.ypos && ypos + tileheight - 3 <= p.ypos) {
                 return "1U";
             }
 
@@ -263,7 +263,7 @@ class Player {
         if(getState("1U")) {
             grav = 0;
             yvel = 0;
-            ypos += 1;
+            ypos += 3;
         }
 
         //Wall jumping off right wall
@@ -327,6 +327,9 @@ class Player {
             ypos -= grav;
             if(grav > -1.5) {
                 grav -= .25;
+            }
+            if(grav < -1.5) {
+                grav = -1.5;
             }
         }
 
