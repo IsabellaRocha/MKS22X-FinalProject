@@ -193,7 +193,6 @@ class Player {
                 if(in.equals(t.interact(madeline))) return t;
             }
         }
-
         return null;
     }
     void respawn() {
@@ -248,8 +247,13 @@ class Player {
         if(getState("1D") && !jump) {
             grav = 0;
             yvel = 0;
-            if(ypos % 1 > .5) ypos = (int) (ypos + 1);
-            else ypos = (int)ypos;
+            if(which("1D") == null) {
+                if(ypos % 1 > .5) ypos = (int) (ypos + 1);
+                else ypos = (int)ypos;
+            }
+            else {
+                ypos = which("1D").ypos - playerheight;
+            }
             dashed = false;
             start = 0;
         }
