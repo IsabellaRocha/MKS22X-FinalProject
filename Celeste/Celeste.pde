@@ -50,7 +50,6 @@ abstract class Tile {
     }
 
     abstract String interact(Player p);
-    abstract int type();
 }
 
 class AERIAL extends Tile {
@@ -61,9 +60,6 @@ class AERIAL extends Tile {
 
     String interact(Player p) {
         return "0A";
-    }
-    int type() {
-        return 0;
     }
 }
 
@@ -99,9 +95,6 @@ class GROUND extends Tile {
 
         return "0A";
     }
-    int type() {
-        return 1;
-    }
 }
 
 class HAZARD extends Tile {
@@ -129,9 +122,6 @@ class HAZARD extends Tile {
 
         if(n || s || w || e) return "2H";
         return "0A";
-    }
-    int type() {
-        return 2;
     }
 }
 
@@ -405,7 +395,7 @@ class Player {
         if(getState("2H") || ypos > height) {
             respawn();
         }
-
+        jump = false;
     }
 
     void display() {
