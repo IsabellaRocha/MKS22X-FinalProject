@@ -130,6 +130,8 @@ class HAZARD extends Tile {
 class Player {
 
     PImage img;
+    PImage img2;
+    PImage last;
 
     // player position
     float xpos, ypos;
@@ -169,6 +171,8 @@ class Player {
         dashed = false;
 
         img = loadImage("img/izze.png");
+        img2 = loadImage("img/izze1.png");
+        last = img;
     }
 
     //Loops through tiles, returns state of player (touching wall/ground/ceiling/spike/air)
@@ -422,7 +426,17 @@ class Player {
     }
 
     void display() {
-         image(img, xpos, ypos, playerwidth, playerheight);
+        if(left) {
+            image(img2, xpos, ypos, playerwidth, playerheight);
+            last = img2;
+        }
+        if(right) {
+            image(img, xpos, ypos, playerwidth, playerheight);
+            last = img;
+        }
+        if(!left && !right) {
+            image(last, xpos, ypos, playerwidth, playerheight);
+        }
     }
 }
 
