@@ -252,6 +252,20 @@ class Player {
             ypos += 1;
         }
 
+        //Wall jumping off right wall
+        if(!getState("1D") && getState("1R") && jump) {
+            xvel = -6;
+            grav = 5;
+            ypos -= 4;
+        }
+
+        //Wall jumping off left wall
+        if(!getState("1D") && getState("1L") && jump) {
+            xvel = 6;
+            grav = 5;
+            ypos -= 4;
+        }
+
         //Don't fall through the floor
         if(getState("1D") && !jump) {
             grav = 0;
@@ -298,20 +312,6 @@ class Player {
             if(grav > -1.5) {
                 grav -= .25;
             }
-        }
-
-        //Wall jumping off right wall
-        if(!getState("1D") && getState("1R") && jump) {
-            xvel = -6;
-            grav = 5;
-            ypos -= 4;
-        }
-
-        //Wall jumping off left wall
-        if(!getState("1D") && getState("1L") && jump) {
-            xvel = 6;
-            grav = 5;
-            ypos -= 4;
         }
 
         if(dash && right && up && !down && !left && !dashed) {
@@ -412,14 +412,18 @@ class Player {
 
 boolean dash, jump;
 boolean up, down, left, right;
-boolean jumpable = true;
+boolean jumpable;
 
 void keyPressed() {
     if(keyCode == 75 && jump) {
         jumpable = false;
-        setMove(keyCode, false);
+        jump = false;
     }
-    else setMove(keyCode, true);
+    if(keyCode == 75 && jumpable) {
+        setMove(keyCode, true);
+    }
+    else if(keyCode != 75) setMove(keyCode, true);
+    else if(keyCode == 75 && !jumpable) setMove(keyCode, false);
 }
 
 void keyReleased() {
