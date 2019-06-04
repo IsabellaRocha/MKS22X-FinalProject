@@ -218,10 +218,26 @@ class Player {
         if(right && !getState("1R") && xpos < width && xvel == 0) {
             xpos += 3;
         }
-        if(getState("1R") || getState("1L")) {
+        if(getState("1R")) {
             xvel = 0;
-            if(xpos % 1 > .5) xpos = (int) (xpos + 1);
-            else xpos = (int)xpos;
+            if(which("1R") == null) {
+                if(xpos % 1 > .5) ypos = (int) (xpos + 1);
+                else xpos = (int)xpos;
+            }
+            else {
+                xpos = which("1R").xpos - playerwidth;
+            }
+        }
+
+        if(getState("1L")) {
+            xvel = 0;
+            if(which("1L") == null) {
+                if(xpos % 1 > .5) ypos = (int) (xpos + 1);
+                else xpos = (int)xpos;
+            }
+            else {
+                xpos = which("1L").xpos + which("1L").tilewidth;
+            }
         }
 
         //Switching levels
@@ -370,7 +386,6 @@ class Player {
             dashed = true;
         }
         if(dash && !right && down && !up && !left && !dashed && !getState("1D")) {
-            print("check");
             if(start == 0) start = frameCount;
             end = frameCount;
             if(end - start < 75) {
