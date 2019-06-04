@@ -412,19 +412,12 @@ class Player {
 
 boolean dash, jump;
 boolean up, down, left, right;
-boolean jumpable;
 
 void keyPressed() {
-    if(keyCode == 75 && jumpable) {
-        setMove(keyCode, true);
-        jumpable = false;
-    }
-    else if(keyCode != 75) setMove(keyCode, true);
-    else if(keyCode == 75 && !jumpable) setMove(keyCode, false);
+    setMove(keyCode, true);
 }
 
 void keyReleased() {
-    if(keyCode == 75) jumpable = true;
     setMove(keyCode, false);
 }
 
