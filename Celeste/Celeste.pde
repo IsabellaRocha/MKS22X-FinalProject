@@ -229,6 +229,8 @@ class Player {
                 xpos = which("1L").xpos + which("1L").tilewidth;
             }
         }
+        if(xpos < 0) xpos = 0;
+        if(xpos > width) xpos = width - playerwidth;
 
         //Switching levels
         if(ypos <= 0) {
