@@ -290,7 +290,7 @@ class Player {
         if(!getState("1D") && !getState("1R") && !getState("1L") && dashed) {
             if(start == 0) start = frameCount;
             end = frameCount;
-            if(end - start > 25) {
+            if(end - start > 28) {
                 ypos -= grav;
                 if (grav > -5) {
                     grav -= .25;
@@ -330,6 +330,7 @@ class Player {
                 yvel = -7;
             }
             dashed = true;
+            grav = 0;
         }
         if(dash && right && down && !up && !left && !dashed) {
             if(start == 0) start = frameCount;
@@ -339,6 +340,7 @@ class Player {
                 yvel = 7;
             }
             dashed = true;
+            grav = 0;
         }
         if(dash && right && !down && !up && !left && !dashed && !getState("1R")) {
             if(start == 0) start = frameCount;
@@ -348,6 +350,7 @@ class Player {
                 yvel = 0;
             }
             dashed = true;
+            grav = 0;
         }
         if(dash && !right && !down && up && left && !dashed) {
             if(start == 0) start = frameCount;
@@ -366,6 +369,7 @@ class Player {
                 yvel = 7;
             }
             dashed = true;
+            grav = 0;
         }
         if(dash && !right && !down && !up && left && !dashed && !getState("1L")) {
             if(start == 0) start = frameCount;
@@ -375,6 +379,7 @@ class Player {
                 yvel = 0;
             }
             dashed = true;
+            grav = 0;
         }
         if(dash && !right && !down && up && !left && !dashed && !getState("1U")) {
             if(start == 0) start = frameCount;
@@ -384,6 +389,7 @@ class Player {
                 yvel = -7;
             }
             dashed = true;
+            grav = 0;
         }
         if(dash && !right && down && !up && !left && !dashed && !getState("1D")) {
             if(start == 0) start = frameCount;
@@ -393,6 +399,7 @@ class Player {
                 yvel = 7;
             }
             dashed = true;
+            grav = 0;
         }
 
         if(getState("2H") || ypos > height) {
