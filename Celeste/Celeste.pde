@@ -178,7 +178,7 @@ class Player {
         return false;
     }
 
-    Tile which(String in) {
+    Tile getTile(String in) {
         for(Tile[] row : mappy.data) {
             for(Tile t : row) {
                 if(in.equals(t.interact(madeline))) return t;
@@ -211,23 +211,23 @@ class Player {
         }
         if(getState("1R")) {
             xvel = 0;
-            if(which("1R") == null) {
+            if(getTile("1R") == null) {
                 if(xpos % 1 > .5) ypos = (int) (xpos + 1);
                 else xpos = (int)xpos;
             }
             else {
-                xpos = which("1R").xpos - playerwidth;
+                xpos = getTile("1R").xpos - playerwidth;
             }
         }
 
         if(getState("1L")) {
             xvel = 0;
-            if(which("1L") == null) {
+            if(getTile("1L") == null) {
                 if(xpos % 1 > .5) ypos = (int) (xpos + 1);
                 else xpos = (int)xpos;
             }
             else {
-                xpos = which("1L").xpos + which("1L").tilewidth;
+                xpos = getTile("1L").xpos + getTile("1L").tilewidth;
             }
         }
         if(xpos < 0) xpos = 0;
@@ -270,12 +270,12 @@ class Player {
         if(getState("1D") && !jump) {
             grav = 0;
             yvel = 0;
-            if(which("1D") == null) {
+            if(getTile("1D") == null) {
                 if(ypos % 1 > .5) ypos = (int) (ypos + 1);
                 else ypos = (int)ypos;
             }
             else {
-                ypos = which("1D").ypos - playerheight;
+                ypos = getTile("1D").ypos - playerheight;
             }
             dashed = false;
             start = 0;
@@ -297,7 +297,7 @@ class Player {
         if(!getState("1D") && !getState("1R") && !getState("1L") && dashed) {
             if(start == 0) start = frameCount;
             end = frameCount;
-            if(end - start > 28) {
+            if(end - start > 27) {
                 ypos -= grav;
                 if (grav > -5) {
                     grav -= .25;
