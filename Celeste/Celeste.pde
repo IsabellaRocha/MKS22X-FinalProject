@@ -72,12 +72,12 @@ class GROUND extends Tile {
     String interact(Player p) {
         if(p.ypos > ypos && p.ypos < ypos + tileheight || p.ypos + p.playerheight > ypos && p.ypos + p.playerheight < ypos + tileheight) {
             // LEFT
-            if(p.xpos >= xpos + tilewidth - 1 && p.xpos <= xpos + tilewidth + 1) {
+            if(p.xpos >= xpos + tilewidth - 2.5 && p.xpos <= xpos + tilewidth + 2.5) {
                 return "1L";
             }
 
             // RIGHT
-            if(xpos - 1 <= p.xpos + p.playerwidth && xpos + 1 >= p.xpos + p.playerwidth) {
+            if(xpos - 2.5 <= p.xpos + p.playerwidth && xpos + 2.5 >= p.xpos + p.playerwidth) {
                 return "1R";
             }
         }
@@ -395,7 +395,6 @@ class Player {
         if(getState("2H") || ypos > height) {
             respawn();
         }
-        jump = false;
     }
 
     void display() {
