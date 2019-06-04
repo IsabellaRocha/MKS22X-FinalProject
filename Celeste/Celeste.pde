@@ -146,6 +146,7 @@ class Player {
     // player spawn point
     float spawnx, spawny;
 
+    // true if player has dashed and not touched the ground since
     boolean dashed;
 
 
@@ -169,6 +170,7 @@ class Player {
         img = loadImage("img/izze.png");
     }
 
+    //Loops through tiles, returns state of player (touching wall/ground/ceiling/spike/air)
     boolean getState(String in) {
         for(Tile[] row : mappy.data) {
             for(Tile t : row) {
@@ -179,6 +181,7 @@ class Player {
         return false;
     }
 
+    //Returns tile player is interacting with
     Tile getTile(String in) {
         for(Tile[] row : mappy.data) {
             for(Tile t : row) {
@@ -187,14 +190,17 @@ class Player {
         }
         return null;
     }
+
     void respawn() {
         xpos = spawnx;
         ypos = spawny;
     }
 
+    //Used to time dash
     int start = 0;
     int end = 0;
 
+    //Responsible for all player movement
     void update() {
         xpos += xvel;
         ypos += yvel;
@@ -203,13 +209,17 @@ class Player {
         if(yvel < 0) yvel += .25;
         if(yvel > 0) yvel -= .25;
 
+        //Move left
         if(left && !getState("1L") && xpos > 0 && xvel == 0) {
             xpos -= 3;
         }
 
+        //Move right
         if(right && !getState("1R") && xpos < width && xvel == 0) {
             xpos += 3;
         }
+
+        //Adjust position of player against right wall
         if(getState("1R")) {
             xvel = 0;
             if(getTile("1R") == null) {
@@ -221,6 +231,7 @@ class Player {
             }
         }
 
+        //Adjust position of player against left wall
         if(getState("1L")) {
             xvel = 0;
             if(getTile("1L") == null) {
@@ -231,6 +242,8 @@ class Player {
                 xpos = getTile("1L").xpos + getTile("1L").tilewidth;
             }
         }
+
+        //Don't go through sides of map
         if(xpos < 0) xpos = 0;
         if(xpos > width) xpos = width - playerwidth;
 
@@ -281,6 +294,8 @@ class Player {
             dashed = false;
             start = 0;
         }
+
+        //Jumping
         if(jump && getState("1D")) {
             grav = 6;
             ypos -= 5;
@@ -315,6 +330,7 @@ class Player {
             }
         }
 
+        //Dashing in all 8 directions
         if(dash && right && up && !down && !left && !dashed) {
             if(start == 0) start = frameCount;
             end = frameCount;
@@ -396,6 +412,7 @@ class Player {
             grav = 0;
         }
 
+        //Dying when you hit spike or fall through bottom of map
         if(getState("2H") || ypos > height) {
             respawn();
         }
@@ -429,8 +446,6 @@ boolean setMove(int k, boolean active) {
     return active;
 }
 
-
-//TODO: Add victory screen image after completion of level2;
 PImage LVL1;
 PImage LVL2;
 PImage VICTORY;
