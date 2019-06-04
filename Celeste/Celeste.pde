@@ -426,15 +426,15 @@ class Player {
     }
 
     void display() {
-        if(left) {
+        if(xvel < 0 || left) {
             image(img2, xpos, ypos, playerwidth, playerheight);
             last = img2;
         }
-        if(right) {
+        if(xvel > 0 || right) {
             image(img, xpos, ypos, playerwidth, playerheight);
             last = img;
         }
-        if(!left && !right) {
+        else {
             image(last, xpos, ypos, playerwidth, playerheight);
         }
     }
