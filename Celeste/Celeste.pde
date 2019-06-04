@@ -415,12 +415,9 @@ boolean up, down, left, right;
 boolean jumpable;
 
 void keyPressed() {
-    if(keyCode == 75 && jump) {
-        jumpable = false;
-        jump = false;
-    }
     if(keyCode == 75 && jumpable) {
         setMove(keyCode, true);
+        jumpable = false;
     }
     else if(keyCode != 75) setMove(keyCode, true);
     else if(keyCode == 75 && !jumpable) setMove(keyCode, false);
