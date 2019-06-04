@@ -71,6 +71,17 @@ class GROUND extends Tile {
     }
 
     String interact(Player p) {
+        if(p.xpos >= xpos && p.xpos < xpos + tilewidth || p.xpos + p.playerwidth > xpos && p.xpos + p.playerwidth <= xpos + tilewidth) {
+            // UP
+            if(ypos + tileheight + 3 >= p.ypos && ypos + tileheight - 3 <= p.ypos) {
+                return "1U";
+            }
+
+            // DOWN
+            if(ypos + 3 >= p.ypos + p.playerheight && ypos - 3 <= p.ypos + p.playerheight) {
+                return "1D";
+            }
+        }
         if(p.ypos > ypos && p.ypos < ypos + tileheight || p.ypos + p.playerheight > ypos && p.ypos + p.playerheight < ypos + tileheight) {
             // LEFT
             if(p.xpos >= xpos + tilewidth - 2.5 && p.xpos <= xpos + tilewidth + 2.5) {
@@ -82,17 +93,7 @@ class GROUND extends Tile {
                 return "1R";
             }
         }
-        if(p.xpos >= xpos && p.xpos < xpos + tilewidth || p.xpos + p.playerwidth > xpos && p.xpos + p.playerwidth <= xpos + tilewidth) {
-            // UP
-            if(ypos + tileheight + 3 >= p.ypos && ypos + tileheight - 3 <= p.ypos) {
-                return "1U";
-            }
 
-            // DOWN
-            if(ypos + 2.5 >= p.ypos + p.playerheight && ypos - 2.5 <= p.ypos + p.playerheight) {
-                return "1D";
-            }
-        }
 
         return "0A";
     }
