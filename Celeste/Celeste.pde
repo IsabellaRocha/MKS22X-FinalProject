@@ -350,7 +350,7 @@ class Player {
             grav = 0;
         }
         if(dash && right && down && !up && !left && !dashed) {
-            if(!getState("1D")) {
+            if(!getState("1D") && !getState("1R")) {
                 if(start == 0) start = frameCount;
                 end = frameCount;
                 if(end - start < 75) {
@@ -360,12 +360,22 @@ class Player {
                 dashed = true;
                 grav = 0;
             }
-            else {
+            if(getState("1D") && !getState("1R")) {
                 if(start == 0) start = frameCount;
                 end = frameCount;
                 if(end - start < 75) {
                     xvel = 7;
                     yvel = 0;
+                }
+                dashed = true;
+                grav = 0;
+            }
+            if(getState("1R") && !getState("1D")) {
+                if(start == 0) start = frameCount;
+                end = frameCount;
+                if(end - start < 75) {
+                    xvel = 0;
+                    yvel = 7;
                 }
                 dashed = true;
                 grav = 0;
@@ -391,7 +401,7 @@ class Player {
             dashed = true;
         }
         if(dash && !right && down && !up && left && !dashed) {
-            if(!getState("1D")) {
+            if(!getState("1D") && !getState("1R")) {
                 if(start == 0) start = frameCount;
                 end = frameCount;
                 if(end - start < 75) {
@@ -401,12 +411,22 @@ class Player {
                 dashed = true;
                 grav = 0;
             }
-            else {
+            if(getState("1D") && !getState("1R")) {
                 if(start == 0) start = frameCount;
                 end = frameCount;
                 if(end - start < 75) {
                     xvel = -7;
                     yvel = 0;
+                }
+                dashed = true;
+                grav = 0;
+            }
+            if(getState("1R") && !getState("1D")) {
+                if(start == 0) start = frameCount;
+                end = frameCount;
+                if(end - start < 75) {
+                    xvel = 0;
+                    yvel = 7;
                 }
                 dashed = true;
                 grav = 0;
