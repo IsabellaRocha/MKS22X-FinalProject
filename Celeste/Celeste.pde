@@ -398,7 +398,6 @@ class Player {
         if(getState("2H") || ypos > height) {
             respawn();
         }
-        jump = false;
     }
 
     void display() {
@@ -413,17 +412,18 @@ class Player {
 
 boolean dash, jump;
 boolean up, down, left, right;
-int lastKey = 0;
+boolean jumpable = true;
 
 void keyPressed() {
-    if (lastKey == 0 || lastKey != keyCode) {
-        lastKey = keyCode;
+    if(keyCode == 75 && jump) {
+        jumpable = false;
+        setMove(keyCode, false);
     }
-    setMove(keyCode, true);
+    else setMove(keyCode, true);
 }
 
 void keyReleased() {
-    lastKey = 0;
+    if(keyCode == 75) jumpable = true;
     setMove(keyCode, false);
 }
 
