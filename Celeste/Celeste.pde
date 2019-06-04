@@ -87,12 +87,12 @@ class GROUND extends Tile {
         }
         if(p.xpos > xpos && p.xpos < xpos + tilewidth - 1 || p.xpos + p.playerwidth > xpos + 1 && p.xpos + p.playerwidth < xpos + tilewidth) {
             // UP
-            if(ypos + tileheight + 2.85 >= p.ypos && ypos + tileheight - 2.85 <= p.ypos) {
+            if(ypos + tileheight + 2.5 >= p.ypos && ypos + tileheight - 2.5 <= p.ypos) {
                 return "1U";
             }
 
             // DOWN
-            if(ypos + 2.85 >= p.ypos + p.playerheight && ypos - 2.85 <= p.ypos + p.playerheight) {
+            if(ypos + 2.5 >= p.ypos + p.playerheight && ypos - 2.5 <= p.ypos + p.playerheight) {
                 return "1D";
             }
         }
