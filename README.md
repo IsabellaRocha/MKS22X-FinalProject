@@ -76,4 +76,4 @@ Tim: Cleaned up code to make it work a little more smoothly, thought of ways to 
 6/3/19:
 Izzy: Fixed bugs where half your body would be in the floor. Also changed the way we calculate ypos by having it equal that of the tile such that it is flush with the tile and the player doesn't get stuck in the floor. Implemented wall jumping and dashing, fixed almost all cases in which you go into the wall through edge detection except when wall jumping and dashing.
 
-Tim: Tried to fix the problem of going into the wall when dashing, as well as help to think of way to adjust ypos accordingly. Continued drawing second map and trying to shrink the ranges necessary for tile detection.
+Tim: Tried to fix the problem of going into the wall when dashing, as well as help to think of a way to adjust ypos accordingly. Continued drawing second map and trying to shrink the ranges necessary for tile detection.
