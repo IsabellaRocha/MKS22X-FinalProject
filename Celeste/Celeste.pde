@@ -50,7 +50,6 @@ abstract class Tile {
     }
 
     abstract String interact(Player p);
-    abstract int type();
 }
 
 class AERIAL extends Tile {
@@ -61,9 +60,6 @@ class AERIAL extends Tile {
 
     String interact(Player p) {
         return "0A";
-    }
-    int type() {
-        return 0;
     }
 }
 
@@ -76,31 +72,28 @@ class GROUND extends Tile {
     String interact(Player p) {
         if(p.ypos > ypos && p.ypos < ypos + tileheight || p.ypos + p.playerheight > ypos && p.ypos + p.playerheight < ypos + tileheight) {
             // LEFT
-            if(p.xpos >= xpos + tilewidth - 1 && p.xpos <= xpos + tilewidth + 1) {
+            if(p.xpos >= xpos + tilewidth - 2.5 && p.xpos <= xpos + tilewidth + 2.5) {
                 return "1L";
             }
 
             // RIGHT
-            if(xpos - 1 <= p.xpos + p.playerwidth && xpos + 1 >= p.xpos + p.playerwidth) {
+            if(xpos - 2.5 <= p.xpos + p.playerwidth && xpos + 2.5 >= p.xpos + p.playerwidth) {
                 return "1R";
             }
         }
         if(p.xpos > xpos && p.xpos < xpos + tilewidth - 1 || p.xpos + p.playerwidth > xpos + 1 && p.xpos + p.playerwidth < xpos + tilewidth) {
             // UP
-            if(ypos + tileheight + 2.85 >= p.ypos && ypos + tileheight - 2.85 <= p.ypos) {
+            if(ypos + tileheight + 2.5 >= p.ypos && ypos + tileheight - 2.5 <= p.ypos) {
                 return "1U";
             }
 
             // DOWN
-            if(ypos + 2.85 >= p.ypos + p.playerheight && ypos - 2.85 <= p.ypos + p.playerheight) {
+            if(ypos + 2.5 >= p.ypos + p.playerheight && ypos - 2.5 <= p.ypos + p.playerheight) {
                 return "1D";
             }
         }
 
         return "0A";
-    }
-    int type() {
-        return 1;
     }
 }
 
@@ -129,9 +122,6 @@ class HAZARD extends Tile {
 
         if(n || s || w || e) return "2H";
         return "0A";
-    }
-    int type() {
-        return 2;
     }
 }
 
@@ -405,7 +395,6 @@ class Player {
         if(getState("2H") || ypos > height) {
             respawn();
         }
-
     }
 
     void display() {
