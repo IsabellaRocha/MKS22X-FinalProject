@@ -1,4 +1,15 @@
 # MKS22X-FinalProject
+CELESTE
+“Celeste is a platforming video game by Canadian video game developers Matt Thorson and Noel Berry, with art of the Brazilian Studio MiniBoss. The game was originally created as a prototype in four days during a game jam, and later expanded into a full release.”
+
+
+In this game, players control a single player character, Madeline, as she scales Celeste in search of self-worth and accomplishment. Celeste plays true to the standard platformer game formula, introducing only two deviations –- air dashing and wall jumping. The goal is to get to the top of the screen using any means necessary.
+
+To play, the controls are very simple. Press D to move right and A to move left. Press K to jump and J to dash. Hold down W, A, S, D, or a combination of the two while pressing J to indicate which direction you'd like to dash in. You can only dash once while in the air, so be careful!
+
+
+
+Development log:
 
 5/20/19:
 Izzy: Made the tile class and started making all of its subclasses. Wrote very basic constructors and started the interact() method which determines what the player is allowed to do in difference circumstances.
@@ -57,6 +68,12 @@ Izzy: Added the range so that you could update position by a float and the posit
 
 
 6/2/19:
-Izzy: Added jumping and messed around with gravity constant. Fixed switching between levels and mostly fixed bugs that occur while jumping. Made it so you die as soon as you hit a tile and that your jump is stopped when you hit a tile above you.
+Izzy: Added jumping and messed around with gravity constant. Fixed switching between levels and mostly fixed bugs that occur while jumping. Made it so you die as soon as you hit a spike and that your jump is stopped when you hit a tile above you.
 
 Tim: Cleaned up code to make it work a little more smoothly, thought of ways to fix the last jump bugs. Also drew the map for level 2.
+
+
+6/3/19:
+Izzy: Fixed bugs where half your body would be in the floor. Also changed the way we calculate ypos by having it equal that of the tile such that it is flush with the tile and the player doesn't get stuck in the floor. Implemented wall jumping and dashing, fixed almost all cases in which you go into the wall through edge detection except when wall jumping and dashing.
+
+Tim: Tried to fix the problem of going into the wall when dashing, as well as help to think of way to adjust ypos accordingly. Continued drawing second map and trying to shrink the ranges necessary for tile detection.
