@@ -111,14 +111,14 @@ class HAZARD extends Tile {
         w = false;
         e = false;
 
-        if(p.xpos >= xpos && p.xpos < xpos + tilewidth) {
-            n = ypos + tileheight + 2.85 >= p.ypos && ypos + tileheight - 2.85 <= p.ypos;        // UP
-            s = ypos + 2.85 >= p.ypos + p.playerheight && ypos - 2.85 <= p.ypos + p.playerheight;    // DOWN
+        if(p.xpos >= xpos && p.xpos < xpos + tilewidth || p.xpos + p.playerwidth > xpos && p.xpos + p.playerwidth <= xpos + tilewidth) {
+            n = ypos + tileheight + 2.5 >= p.ypos && ypos + tileheight - 2.5 <= p.ypos;        // UP
+            s = ypos + 2.5 >= p.ypos + p.playerheight && ypos - 2.5 <= p.ypos + p.playerheight;    // DOWN
         }
 
         if(p.ypos > ypos && p.ypos < ypos + tileheight || p.ypos + p.playerheight > ypos && p.ypos + p.playerheight < ypos + tileheight) {
-            w = (p.xpos >= xpos + tilewidth - 2 && p.xpos <= xpos + tilewidth + 2);         // LEFT
-            e = (xpos - 2 <= p.xpos + p.playerwidth && xpos + 2 >= p.xpos + p.playerwidth);     // RIGHT
+            w = p.xpos >= xpos + tilewidth - 2.5 && p.xpos <= xpos + tilewidth + 2.5;         // LEFT
+            e = xpos - 2.5 <= p.xpos + p.playerwidth && xpos + 2.5 >= p.xpos + p.playerwidth;     // RIGHT
         }
 
         if(n || s || w || e) return "2H";
