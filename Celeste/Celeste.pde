@@ -165,8 +165,8 @@ class Player {
 
         grav = 0.00;
 
-        playerwidth = 30;
-        playerheight = 28;
+        playerwidth = 36;
+        playerheight = 32;
 
         dashed = false;
 
