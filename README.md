@@ -62,7 +62,11 @@ To play, the controls are very simple. Press D to move right and A to move left.
 ### 5/31/19:
 **Izzy:** Added test cases to see why player was being stopped despite not running into walls, changed interact so touching the floor didn't stop it. Made it so you can't run through the side of the map and that you respawn in the original spot when you fall off map or hit a spike, deleted test functions.
 
+<<<<<<< HEAD
 **Tim:** Added test cases to see which interactions were triggering, if cases weren't being triggered. Also color coded map to see if it was being generated properly, it wasn't, fixed map layout to properly generate map by scale of 16. Also realized that when updating position by a float, you could still run through tiles, suggested adding a range.
+=======
+Tim: Added test cases to see which interactions were triggering, if cases weren't being triggered. Also color coded map to see if it was being generated properly, it wasn't, fixed map layout to properly generate map by scale of 16 and orient correctly. Also realized that when updating position by a float, you could still run through tiles, suggested adding a range.
+>>>>>>> 19b394e001955b9e5ca81c1e857f4cced0ccc7b4
 
 
 ### 6/1/19:
@@ -79,3 +83,9 @@ To play, the controls are very simple. Press D to move right and A to move left.
 **Izzy:** Fixed bugs where half your body would be in the floor. Also changed the way we calculate ypos by having it equal that of the tile such that it is flush with the tile and the player doesn't get stuck in the floor. Implemented wall jumping and dashing, fixed almost all cases in which you go into the wall through edge detection except when wall jumping and dashing. Wrote code for generating victory screen once you reach the end.
 
 **Tim:** Tried to fix the problem of going into the wall when dashing, as well as help to think of a way to adjust ypos accordingly. Continued drawing second map and trying to shrink the ranges necessary for tile detection.
+
+
+### 6/4/19:
+**Izzy:** Fixed dashing so you can't dash through floor or wall when dashing diagonally. Also messed with ranges to prevent certain angles where you could jump through walls. Fixed wall jumping so that when you jump between two walls that are close together you don't jump inside the other wall. Fixed sliding down walls at a certain speed, as well as gravity affecting you when you dash, which before was working against the dash. Also fixed spikes, before you could sometimes walk on them. Implemented the victory screen once you reach the end of level 2. Implemented changing player orientation when you move in different directions.
+
+**Tim:** Helped find bugs by switching player to a box to see things more clearly. Tried to lower range necessary for tile detection. Found problems with spikes and dashing. Implemented changing player color when dashing and until you are able to dash again.
