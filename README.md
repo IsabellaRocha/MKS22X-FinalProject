@@ -1,6 +1,6 @@
-# MKS22X-FinalProject
+# CELESTE
 
-## CELESTE
+## OVERVIEW
 
 """  
 [Celeste](http://www.celestegame.com/) is a platforming video game by Canadian video game developers Matt Thorson and Noel Berry, with art of the Brazilian Studio MiniBoss. The game was originally created as a prototype in four days during a game jam, and later expanded into a full release.  
