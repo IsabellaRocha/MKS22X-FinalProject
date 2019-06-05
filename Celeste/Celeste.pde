@@ -543,7 +543,8 @@ class Player {
             }
         }
 
-        if(dashed && down || dashed && up) {
+        //UP AND DOWN
+        else if(dashed && down || dashed && up) {
             if(last == right_false || last == right_true) {
                 image(right_true, xpos, ypos, playerwidth, playerheight);
                 last = right_true;
@@ -551,6 +552,18 @@ class Player {
             if(last == left_false || last == left_true) {
                 image(left_true, xpos, ypos, playerwidth, playerheight);
                 last = left_true;
+            }
+        }
+
+        //Change back to normal color as soon as you touch the ground
+        if(xvel == 0 && getState("1D")) {
+            if(last == right_false || last == right_true) {
+                image(right_false, xpos, ypos, playerwidth, playerheight);
+                last = right_false;
+            }
+            if(last == left_false || last == left_true) {
+                image(left_false, xpos, ypos, playerwidth, playerheight);
+                last = left_false;
             }
         }
         // DEFAULT CASE
