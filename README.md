@@ -2,9 +2,9 @@
 
 ## CELESTE
 
-"  
+"""  
 [Celeste](http://www.celestegame.com/) is a platforming video game by Canadian video game developers Matt Thorson and Noel Berry, with art of the Brazilian Studio MiniBoss. The game was originally created as a prototype in four days during a game jam, and later expanded into a full release.  
-"  
+"""  
 
 In this game, players control a single player character, Madeline, as she scales Celeste in search of self-worth and accomplishment. Celeste plays true to the standard platformer game formula, introducing only two deviations –- air dashing and wall jumping. The goal is to get to the top of the screen using any means necessary.
 
@@ -62,11 +62,7 @@ To play, the controls are very simple. Press D to move right and A to move left.
 ### 5/31/19:
 **Izzy:** Added test cases to see why player was being stopped despite not running into walls, changed interact so touching the floor didn't stop it. Made it so you can't run through the side of the map and that you respawn in the original spot when you fall off map or hit a spike, deleted test functions.
 
-<<<<<<< HEAD
-**Tim:** Added test cases to see which interactions were triggering, if cases weren't being triggered. Also color coded map to see if it was being generated properly, it wasn't, fixed map layout to properly generate map by scale of 16. Also realized that when updating position by a float, you could still run through tiles, suggested adding a range.
-=======
-Tim: Added test cases to see which interactions were triggering, if cases weren't being triggered. Also color coded map to see if it was being generated properly, it wasn't, fixed map layout to properly generate map by scale of 16 and orient correctly. Also realized that when updating position by a float, you could still run through tiles, suggested adding a range.
->>>>>>> 19b394e001955b9e5ca81c1e857f4cced0ccc7b4
+**Tim:** Added test cases to see which interactions were triggering, if cases weren't being triggered. Also color coded map to see if it was being generated properly, it wasn't, fixed map layout to properly generate map by scale of 16 and orient correctly. Also realized that when updating position by a float, you could still run through tiles, suggested adding a range.
 
 
 ### 6/1/19:
