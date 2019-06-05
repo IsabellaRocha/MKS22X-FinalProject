@@ -129,8 +129,11 @@ class HAZARD extends Tile {
 
 class Player {
 
-    PImage img;
-    PImage img2;
+    PImage right_false;
+    PImage right_true;
+    PImage left_false;
+    PImage left_true;
+
     PImage last;
 
     // player position
@@ -165,14 +168,18 @@ class Player {
 
         grav = 0.00;
 
-        playerwidth = 36;
-        playerheight = 32;
+        playerwidth = 30;
+        playerheight = 28;
 
         dashed = false;
 
-        img = loadImage("img/izze.png");
-        img2 = loadImage("img/izze1.png");
-        last = img;
+        right_false = loadImage("img/izze_FRAME0.png");
+        right_true = loadImage("img/izze_FRAME1.png");
+
+        left_false = loadImage("img/izze_FRAME2.png");
+        left_true = loadImage("img/izze_FRAME3.png");
+
+        last = right_false;
     }
 
     //Loops through tiles, returns state of player (touching wall/ground/ceiling/spike/air)
@@ -514,14 +521,29 @@ class Player {
     }
 
     void display() {
+        // LEFT
         if(xvel < 0 || xvel == 0 && left) {
-            image(img2, xpos, ypos, playerwidth, playerheight);
-            last = img2;
+            if(dashed) {
+                image(left_true, xpos, ypos, playerwidth, playerheight);
+                last = left_true;
+            } else {
+                image(left_false, xpos, ypos, playerwidth, playerheight);
+                last = left_false;
+            }
         }
+
+        // RIGHT
         if(xvel > 0 || xvel == 0 && right) {
-            image(img, xpos, ypos, playerwidth, playerheight);
-            last = img;
+            if(dashed) {
+                image(right_true, xpos, ypos, playerwidth, playerheight);
+                last = right_true;
+            } else {
+                image(right_false, xpos, ypos, playerwidth, playerheight);
+                last = right_false;
+            }
         }
+
+        // DEFAULT CASE
         else {
             image(last, xpos, ypos, playerwidth, playerheight);
         }
