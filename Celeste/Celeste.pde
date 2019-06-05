@@ -543,6 +543,16 @@ class Player {
             }
         }
 
+        if(dashed && down || dashed && up) {
+            if(last == right_false || last == right_true) {
+                image(right_true, xpos, ypos, playerwidth, playerheight);
+                last = right_true;
+            }
+            if(last == left_false || last == left_true) {
+                image(left_true, xpos, ypos, playerwidth, playerheight);
+                last = left_true;
+            }
+        }
         // DEFAULT CASE
         else {
             image(last, xpos, ypos, playerwidth, playerheight);
