@@ -130,6 +130,8 @@ class HAZARD extends Tile {
 class Player {
 
     PImage img;
+    PImage img2;
+    PImage last;
 
     // player position
     float xpos, ypos;
@@ -169,6 +171,8 @@ class Player {
         dashed = false;
 
         img = loadImage("img/izze.png");
+        img2 = loadImage("img/izze1.png");
+        last = img;
     }
 
     //Loops through tiles, returns state of player (touching wall/ground/ceiling/spike/air)
@@ -335,25 +339,68 @@ class Player {
 
         //Dashing in all 8 directions
         if(dash && right && up && !down && !left && !dashed) {
-            if(start == 0) start = frameCount;
-            end = frameCount;
-            if(end - start < 75) {
+            if(!getState("1U") && !getState("1R")) {
+                if(start == 0) start = frameCount;
                 end = frameCount;
-                xvel = 7;
-                yvel = -7;
+                if(end - start < 75) {
+                    xvel = 7;
+                    yvel = -7;
+                }
+                dashed = true;
+                grav = 0;
             }
-            dashed = true;
-            grav = 0;
+            if(getState("1U") && !getState("1R")) {
+                if(start == 0) start = frameCount;
+                end = frameCount;
+                if(end - start < 75) {
+                    xvel = 7;
+                    yvel = 0;
+                }
+                dashed = true;
+                grav = 0;
+            }
+            if(getState("1R") && !getState("1U")) {
+                if(start == 0) start = frameCount;
+                end = frameCount;
+                if(end - start < 75) {
+                    xvel = 0;
+                    yvel = -7;
+                }
+                dashed = true;
+                grav = 0;
+            }
         }
         if(dash && right && down && !up && !left && !dashed) {
-            if(start == 0) start = frameCount;
-            end = frameCount;
-            if(end - start < 75) {
-                xvel = 7;
-                yvel = 7;
+            if(!getState("1D") && !getState("1R")) {
+                if(start == 0) start = frameCount;
+                end = frameCount;
+                if(end - start < 75) {
+                    xvel = 7;
+                    yvel = 7;
+                }
+                dashed = true;
+                grav = 0;
             }
-            dashed = true;
-            grav = 0;
+            if(getState("1D") && !getState("1R")) {
+                if(start == 0) start = frameCount;
+                end = frameCount;
+                if(end - start < 75) {
+                    xvel = 7;
+                    yvel = 0;
+                }
+                dashed = true;
+                grav = 0;
+            }
+            if(getState("1R") && !getState("1D")) {
+                if(start == 0) start = frameCount;
+                end = frameCount;
+                if(end - start < 75) {
+                    xvel = 0;
+                    yvel = 7;
+                }
+                dashed = true;
+                grav = 0;
+            }
         }
         if(dash && right && !down && !up && !left && !dashed && !getState("1R")) {
             if(start == 0) start = frameCount;
@@ -366,23 +413,68 @@ class Player {
             grav = 0;
         }
         if(dash && !right && !down && up && left && !dashed) {
-            if(start == 0) start = frameCount;
-            end = frameCount;
-            if(end - start < 75) {
-                xvel = -7;
-                yvel = -7;
+            if(!getState("1U") && !getState("1L")) {
+                if(start == 0) start = frameCount;
+                end = frameCount;
+                if(end - start < 75) {
+                    xvel = -7;
+                    yvel = -7;
+                }
+                dashed = true;
+                grav = 0;
             }
-            dashed = true;
+            if(getState("1U") && !getState("1L")) {
+                if(start == 0) start = frameCount;
+                end = frameCount;
+                if(end - start < 75) {
+                    xvel = -7;
+                    yvel = 0;
+                }
+                dashed = true;
+                grav = 0;
+            }
+            if(getState("1L") && !getState("1U")) {
+                if(start == 0) start = frameCount;
+                end = frameCount;
+                if(end - start < 75) {
+                    xvel = 0;
+                    yvel = -7;
+                }
+                dashed = true;
+                grav = 0;
+            }
         }
         if(dash && !right && down && !up && left && !dashed) {
-            if(start == 0) start = frameCount;
-            end = frameCount;
-            if(end - start < 75) {
-                xvel = -7;
-                yvel = 7;
+            if(!getState("1D") && !getState("1L")) {
+                if(start == 0) start = frameCount;
+                end = frameCount;
+                if(end - start < 75) {
+                    xvel = -7;
+                    yvel = 7;
+                }
+                dashed = true;
+                grav = 0;
             }
-            dashed = true;
-            grav = 0;
+            if(getState("1D") && !getState("1L")) {
+                if(start == 0) start = frameCount;
+                end = frameCount;
+                if(end - start < 75) {
+                    xvel = -7;
+                    yvel = 0;
+                }
+                dashed = true;
+                grav = 0;
+            }
+            if(getState("1L") && !getState("1D")) {
+                if(start == 0) start = frameCount;
+                end = frameCount;
+                if(end - start < 75) {
+                    xvel = 0;
+                    yvel = 7;
+                }
+                dashed = true;
+                grav = 0;
+            }
         }
         if(dash && !right && !down && !up && left && !dashed && !getState("1L")) {
             if(start == 0) start = frameCount;
@@ -422,7 +514,17 @@ class Player {
     }
 
     void display() {
-         image(img, xpos, ypos, playerwidth, playerheight);
+        if(xvel < 0 || xvel == 0 && left) {
+            image(img2, xpos, ypos, playerwidth, playerheight);
+            last = img2;
+        }
+        if(xvel > 0 || xvel == 0 && right) {
+            image(img, xpos, ypos, playerwidth, playerheight);
+            last = img;
+        }
+        else {
+            image(last, xpos, ypos, playerwidth, playerheight);
+        }
     }
 }
 
